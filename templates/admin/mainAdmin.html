@@ -1,0 +1,128 @@
+{%extends "base/base.html" %}
+{% block page %}
+    	<script type="text/javascript">
+    window.onload = function () {
+        var dps = {{ data_points|safe }};
+        var dps1 = {{ data_points_total|safe }}
+        
+        var chart = new CanvasJS.Chart("chartContainer", {
+            title: {
+                fontSize: 20,
+                text: "Посещения клиентов за последние 7 дней"
+            },
+            data: [{
+                lineThickness: 3,
+                type: "line",
+                dataPoints: dps,
+                color: "lightblue",
+                lineColor: "#007bff",
+            }],
+            axisX: {
+            },
+            axisY: {
+                fontSize: 14,
+                title: "Количество",
+                interval: 1, // метки через 1, чтобы были целые числа
+                includeZero: true
+            },
+        });
+        
+        var chart1 = new CanvasJS.Chart("paymentsChart", {
+            title: {
+                fontSize: 20,
+                text: "Платежи"
+            },
+            data: [{
+                lineThickness: 3,
+                type: "column",
+                dataPoints: dps1,
+                color: "lightblue",
+                lineColor: "#007bff",
+            }],
+            axisX: {
+            },
+            axisY: {
+                fontSize: 14,
+                includeZero: true
+            },
+        });
+        
+        chart1.render();
+        chart.render();
+    }
+    
+    
+</script>
+    <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    {% load static %}
+    <main class="profile_fon" style="background: white; padding: 0 20px">
+        <div class="graphBlock">
+            <div id="chartContainer" class="graph" style="height: 300px; width: 500px;">
+	        </div>
+            <div id="paymentsChart" class="graph" style="height: 300px; width: 500px;">
+	        </div>
+            <div class="topMembers">
+                <div class="topMemberTitle">
+                    <h1>Топ клиент</h1>
+                    <p style="margin-bottom: 5px"> {{ topVisitsOftenMember.member.last_name}} {{ topVisitsOftenMember.member.first_name}} {{ topVisitsOftenMember.member.patronymic}}</p>
+                </div>
+                <div style="overflow-x: auto">
+                    {% for visitsOftenMember in visitsOftenMember %}
+                        <hr>
+                        <div class="topMember">
+                        
+                            <img src="../../static/mainAdminPage/free-icon-user-1077114.png">
+                            <p class="nameMember">{{ visitsOftenMember.last_name}} {{ visitsOftenMember.first_name}} {{ visitsOftenMember.patronymic}}</p>
+                            <p class="visitsCount">{{ visitsOftenMember.visits_count}}</p>
+                        
+                        </div>
+                    {% endfor %}
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="statistics">
+            <div class="statisticsBar">
+                <div class="statisticsTitle">
+                    <p>Всего клиентов</p>
+                </div>
+                <div class="statisticsBlock">
+                    <div class="statisticsText">
+                        <h2>{{ countMembers }}</h2>
+                    </div>
+                    <div class="statisticsImg">
+                       <img src="../../static/mainAdminPage/free-icon-customer-3126647.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="statisticsBar">
+                <div class="statisticsTitle">
+                    <p>Всего тренеров</p>
+                </div>
+                 <div class="statisticsBlock">
+                    <div class="statisticsText">
+                        <h2>{{ countTrainers }}</h2>
+                    </div>
+                     <div class="statisticsImg">
+                        <img src="../../static/mainAdminPage/free-icon-coach-17097650.png" alt="">
+                     </div>
+                 </div>
+            </div>
+            <div class="statisticsBar">
+                <div class="statisticsTitle">
+                    <p>Выручка за сегодня</p>
+                </div>
+                <div class="statisticsBlock">
+                    <div class="statisticsText">
+                        <h2>{{ money }} ₽</h2>
+                    </div>
+                    <div class="statisticsImg">
+                        <img src="../../static/mainAdminPage/free-icon-money-2969764.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,101 @@
+.profile_fon{
+    min-height: 100vh;
+    justify-items: center;
+}
+
+.data_block{
+    width: 100%;
+    margin: 10px;
+    display: flex;
+}
+.block_private_data{
+    width: 100%;
+    padding: 10px;
+    display: grid;
+    background: white;
+    box-shadow: 1px 1px 5px black;
+    border-radius: 20px;
+}
+.block_info_user{
+    display: flex;
+}
+.private_data{
+
+    padding: 10px;
+}
+.block_info_user img{
+    border-radius: 20px;
+    height: 250px;
+    width: 250px;
+}
+.block_info_user p{
+    color: black;
+}
+
+.block_button_edit a{
+    color: black;
+    text-decoration: none;
+    display: flex;
+    justify-self: right;
+    padding: 10px;
+}
+
+
+
+
+.balance{
+    width: 20%;
+    padding: 10px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 1px 1px 5px black;
+}
+
+.balance p{
+    align-self: center;
+    justify-self: center;
+    color: black;
+}
+.balance h1{
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    font-weight: lighter;
+    color: black;
+}
+
+.balance a{
+    display: flex;
+    text-decoration: none;
+    color: black;
+}
+
+
+.block_history_buy
+{
+
+    width: 100%;
+    justify-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.history_buy
+{
+    overflow-y: scroll;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height:500px;
+    width: 100%;
+    box-shadow: 1px 1px 5px black;
+    background: white;
+    border-radius: 20px;
+
+}
+.cardHistory{
+    border: 1px black solid;
+    padding: 10px;
+    border-radius: 20px;
+    margin: 10px;
+    background: white;
+}

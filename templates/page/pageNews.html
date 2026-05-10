@@ -1,0 +1,23 @@
+{%extends "base/base.html" %}
+{% block page %}
+    {% load static %}
+    <main style="min-height: 100vh;" >
+        <div class="block_trainer">
+            <div class="block_all_trainer">
+                <a href="{% url "news" %}" class="link_return"><p >◀</p> Все новости</a>
+            </div>
+            <div class="block_info_trainer">
+                <div class="block_img_trainer">
+                    <img class="img_trainer" src="{{new.image.url}}" alt="">
+                </div>
+                <div class="block_text_trainer">
+                    <div style="height: 70%">
+                        <h3 style="margin-top: 0; color: #686868">{{ new.date}}</h3>
+                        <h1 style="color: black">{{ new.title}}</h1>
+                        <p style="margin-top: 20px">{{ new.content}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

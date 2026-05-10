@@ -1,0 +1,95 @@
+.block_trainers{
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+.block_trainers a{
+    margin-right: 5px;
+
+}
+.card_trainer:hover .text_trainer{
+    transform: translate(0,0);
+    transition: 0.5s ease-in-out;
+    display: block;
+
+}
+.card_trainer{
+    margin-right: 10px;
+    display: flex;
+    position: relative;
+    border-radius: 20px;
+    margin-top: 20px;
+    width: 390px;
+    height: 500px;
+}
+.card_trainer:hover{
+    transform: translateY(-15px);
+    transition: ease-in-out 300ms;
+}
+.image_trainer{
+    width: 100%;
+    height: 100%;
+    border-radius: 20px ;
+}
+.title_trainer{
+    color: white;
+    text-align: justify;
+    word-break: break-all;
+    text-decoration: none;
+    margin-bottom: 5px;
+    margin-top: 5px;
+
+}
+.text_trainer{
+    transform: translate(-5%,0)scaleY(0);
+    display: none;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.56);
+    border-radius: 0 20px 20px 0;
+    position: absolute;
+    top: 75%;
+}
+.type_trainer{
+    text-align: left;
+    color: white;
+}
+.category_trainer{
+    position: absolute;
+    background: rgba(0, 0, 0, 0.73);
+    border: white solid 2px;
+    color: white;
+    top: 5%;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 0 20px 20px 0 ;
+}
+
+.buy_trainer {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(0, 100%) scaleY(0);
+    transition: all 0.5s ease;
+    position: absolute; /* добавьте, если нужно */
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    background: #316700;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+}
+
+/* при наведении на .card_trainer */
+.card_trainer:hover .buy_trainer {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, 0) scaleY(1);
+}
+.text_trainer{
+
+    display: block;
+}

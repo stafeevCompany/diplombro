@@ -1,0 +1,17 @@
+{%extends "base/base.html" %}
+{% load static %}
+{% block page %}
+    <main style="min-height: 100vh; align-content: center"> 
+        <div class="login_form_block" >
+            <form class="login_form" method="POST">
+                {% csrf_token %}
+                <h1>Авторизация</h1>
+                <input type="tel" placeholder="Номер телефона" name="phone" required/>
+                <input type="password" name="password"  placeholder="Пароль" required/>
+                <button class="button_exit" type="submit">Войти</button>
+                <p>У вас нет аккаунта?<a class="link_registration" href="{% url 'registration' %}"> Зарегистрироваться?</a></p>
+            </form>
+        </div>
+        
+    </main>
+{% endblock %}

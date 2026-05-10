@@ -1,0 +1,34 @@
+.block_service{
+    display: flex;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    background: white;
+    border-radius: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+
+}
+
+.card_service{
+    margin-top: 10px;
+    height: 400px;
+    width: 400px;
+    color: white;
+    background: -webkit-linear-gradient(145deg, #090f30,#000000,#190631);background: linear-gradient(145deg, #090f30,#000000,#190631);
+
+    border-radius: 20px;
+    justify-items: center;
+    align-content: center;
+    justify-self: center;
+    border: #002b93 solid 1px;
+}
+.link_service{
+
+    margin-right: 10px;
+}
+.card_service h2{
+    font-size: 30px;
+    color: white;
+}
+

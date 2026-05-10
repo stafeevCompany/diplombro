@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     {% load static %}
+    <meta charset="UTF-8">
+    <title>Страница</title>
+    <link href="{% static 'CSS/form_login.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/pageTrainer.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/aside.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/buySubscription.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/profile_user.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/card_user.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/addMoney.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/notification.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/header.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/body1.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/footer.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/aside.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/mainPage.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/news.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/service.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/subscriptions.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/trainers.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/pageTrainer.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/records.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/adminMainPage.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/DataTable.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/recordsTrainer.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/statisticTrainer.css' %}" rel="stylesheet" >
+    <link href="{% static 'CSS/formPay.css' %}" rel="stylesheet" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+{% if user.is_active == True %}
+    <aside>
+        <div class="tabsAside">
+            {% if member %}
+                <a href="" class="imgAsideUserLink"><img class="imgAsideUser" src="{{ member.image.url }}" alt=""/></a>
+                <a href="{% url 'profile_user' %}"  class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-home-5525279.png" alt=""><p>Главная</p></a>
+                <a href="{% url 'records' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-workout-6201361.png" alt=""><p>Записи</p></a>
+                <a href="{% url 'news' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-newspaper-5502315.png" alt=""><p>Новости</p></a>
+                <a href="{% url "notification" %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-bell-6824079.png" alt=""><p>Уведомления</p></a>
+                <a href="{% url 'subscriptions' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-subscription-9398940.png" alt=""><p>Абонементы</p></a>
+                <a href="{% url 'trainers' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-coach-17097650.png" alt=""><p>Тренера</p></a>
+                <a href="{% url 'shop' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-shelves-3854408.png" alt=""><p>Фитнес-товары</p></a>
+            {% endif %}
+            
+            {% if admin %}
+                <a href="" class="imgAsideUserLink"><img class="imgAsideUser" src="{{ admin.image.url }}" alt=""/></a>
+                <a href="{% url 'adminMainPage' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-stats-223407.png" alt=""><p>Статистика</p></a>
+                <a href=" {% url 'WorkTable' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-software-engineer-12534727.png" alt=""><p>Управление таблицами</p></a>
+                <a href=" {% url 'timeTable' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-coach-17097650.png" alt=""><p>Расписание тренеров</p></a>
+                <a href=" {% url 'workSite' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-online-4713146.png" alt=""><p>Управление сайтом</p></a>
+                <a href=" {% url 'paymentsTable' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-money-2969764.png" alt=""><p>Платежи</p></a>
+                <a href=" {% url 'visitsTable' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-weekly-calendar-outline-event-interface-symbol-54332.png" alt=""><p>История посещений</p></a>
+            {% endif %}
+            {% if trainer %}
+                <a href="" class="imgAsideUserLink"><img class="imgAsideUser" src="{{ trainer.image.url }}" alt=""/></a>
+                <a href="{% url 'mainTrainerPage' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-stats-223407.png" alt=""><p>Статистика</p></a>
+                <a href=" {% url 'recordTrainerTimeTable' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-software-engineer-12534727.png" alt=""><p>Расписание</p></a>
+            {% endif %}
+        </div>
+            <a class="logoutUserLink"  href="{% url "logout" %}"><img class="imgAsideNav" src="../../static/aside/free-icon-exit-1286969%20(1).png" alt=""><p>Выход</p></a>
+    </aside>
+{% endif %}
+    <div style=" {% if user.is_active == True %}width: 95.6%;{% else %}width: 100%;{% endif %}   position: relative; justify-self: right;">
+        <header>
+        <div class="icon">
+            <a href="" style="text-decoration: none"><h1 style="text-align: left; font-size: 30px"><span style="color: #007bff">Gym</span> Center</h1></a>
+        </div>
+            <div class="header_menu">
+                {% if user.is_active == False  %}
+                <a class="navigation_header" href="{% url 'main_page' %}"><p class="navigation_headerText">Главная</p></a>
+                <a class="navigation_header" href="{% url 'subscriptions' %}"><p class="navigation_headerText">Абонементы</p></a>
+                <a class="navigation_header" href="{% url 'news' %}"><p class="navigation_headerText">Новости</p></a>
+                <a class="navigation_header" href="{% url 'trainers' %}" ><p class="navigation_headerText">Тренера</p></a>
+                {% endif %}
+            </div>
+            <div class="login_user">
+                <div style="justify-content: right; margin-right: 20px;">
+                    {% if user.is_active == False  %}
+                        <a class="login_button" href="{% url "login" %}">Войти</a>
+                        <a class="registr_button" href="{% url "registration" %}">Зарегистрироваться</a>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+
+    {% block page %}
+    {% endblock %}
+
+
+    <footer>
+        <div class="navigation_footer">
+            <div class="link_footer">
+                <a class="navigation_footer_link">Главная</a>
+                <a class="navigation_footer_link">Пространство</a>
+                <a class="navigation_footer_link">Новости</a>
+                <a class="navigation_footer_link">Тренера</a>
+                <a class="navigation_footer_link">Абонементы</a>
+                <a class="navigation_footer_link">О нас</a> 
+            </div>
+            <div class="contact_footer">
+                <a class="contact_footer_title">Контакты</a>
+                <a class="contact_footer_link">+ 7 (996) 279-11-67</a>
+                
+            </div>
+        </div>
+        <div class="social_block">
+            <p >
+                Сайт разработан
+              <a class="social_link" href="https://github.com/stafeevCompany">
+                StafeevCompany
+              </a>  
+            </p>
+            
+        </div>
+    </footer>
+</div>
+</body>
+</html>

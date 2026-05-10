@@ -1,0 +1,19 @@
+{%extends "base/base.html" %}
+{% block page %}
+    {% load static %}
+    <main style="min-height: 100vh;" >
+        <div class="login_form_block" >
+            <form class="login_form" method="POST">
+                {% csrf_token %}
+                <h1>Редактирование профиля</h1>
+                <input type="tel" placeholder="Имя" name="phone" required/>
+                <input type="password" name="password"  placeholder="Фамилия" required/>
+                <input type="password" name="password"  placeholder="Отчество" required/>
+                <input type="password" name="password"  placeholder="Номер телефона" required/>
+                <input type="password" name="password"  placeholder="Пароль" required/>
+                <button class="button_exit" type="submit">Изменить</button>
+                <p></p>
+            </form>
+        </div>
+    </main>
+{% endblock %}

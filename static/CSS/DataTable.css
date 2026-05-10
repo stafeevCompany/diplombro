@@ -1,0 +1,156 @@
+
+
+  /* Навигация */
+  nav {
+  border-radius: 20px;
+    display: flex;
+    flex-wrap: wrap;
+
+  }
+
+  nav button {
+    padding: 5px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  nav button:hover {
+    background-color: #555;
+  }
+
+  /* Основной контейнер */
+  .content {
+
+      height: 100%;
+    margin: 0 auto;
+  }
+
+  /* Таблицы и строки */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    font-size: 14px;
+  }
+@media (max-width: 600px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  th, td {
+    white-space: nowrap;
+  }
+}
+  th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+    word-wrap: break-word;
+
+  }
+
+  th {
+  }
+
+  /* Изображения в таблице */
+  td img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  /* Действия */
+  a.action-btn {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 13px;
+    transition: background-color 0.3s;
+  }
+
+  a.edit {
+    border-radius: 20px;
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  a.edit:hover {
+    background-color: #45a049;
+  }
+
+  a.delete {
+     border-radius: 20px;
+    background-color: #f44336;
+    color: white;
+  }
+
+  a.delete:hover {
+    background-color: #da190b;
+  }
+
+  /* Формы */
+  input[type=text], input[type=email], input[type=number], textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+  }
+
+  button.save-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  button.save-btn:hover {
+    background-color: #45a049;
+  }
+
+  /* Адаптивность */
+  @media(max-width: 768px) {
+    nav button {
+      min-width: 100%;
+    }
+
+    .content {
+      padding: 10px;
+    }
+
+    table {
+      font-size: 12px;
+    }
+
+    th, td {
+      overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+      padding: 8px;
+    }
+  }
+
+.block_add{
+  width: 10%;
+  display: flex;
+  justify-content: right;
+}
+  .addDate{
+    text-decoration: none;
+    margin: 10px;
+    background: royalblue;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+  }

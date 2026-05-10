@@ -1,0 +1,147 @@
+{%extends "base/base.html" %}
+{% block page %}
+    {% load static %}
+    <main style="min-height: 100vh; padding: 0 20px;
+  background-color: #ffffff;" >
+
+        <div class="records">
+         <h1 style="justify-self: left">Записи</h1>
+            <div style="display: flex; padding:10px 0 ">
+                <div class="blockInfo" onclick="showSection('All')">
+                    <div><h3 style="font-size: 20px;">Все</h3></div>
+                    <div style="height: 60%;display: flex; align-items: center"><h2>{{ recordsCount }}</h2></div>
+                </div>
+                <div class="blockInfo" onclick="showSection('Paid')">
+                    <div><h3 style="font-size: 20px">Оплаченные</h3></div>
+                    <div style="height: 60%;display: flex; align-items: center"><h2>{{ recordsPaidCount }}</h2></div>
+                </div>
+                <div class="blockInfo" onclick="showSection('Unpaid')">
+                    <div><h3 style="font-size: 20px">Не оплаченные</h3></div>
+                    <div style="height: 60%;display: flex; align-items: center"><h2>{{ recordsUnpaidCount }}</h2></div>
+                </div>
+            </div>
+            <table  id="section-All" class="section">
+                <thead class="headerTable">
+                    <tr >
+                        <th>Тренер</th>
+                        <th>Тип тренировки</th>
+                        <th>Запись</th>
+                        <th>Стоимость</th>
+                        <th>Статус</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                
+                {% for record in records %}
+                    
+                <tr class="rowData">
+                    <td class="tdData">{{ record.trainer.last_name }} {{ record.trainer.first_name }} {{ record.trainer.patronymic }}</td>
+                    <td class="tdData">{{ record.typeTraining }}</td>
+                    <td class="tdData">{{ record.dateTime }}</td>
+                    <td class="tdData">{{ record.amount }}</td>
+                    <td class="tdData">
+                        {% if record.status == 'Не оплачено' %}
+                            <div style="background: rgba(159,0,0,0.22); color: white; display: flex; justify-content: center; border-radius: 20px;padding: 1px">
+                                {{ record.status }}
+                            </div>
+                        {% elif record.status == 'Оплачено' %}
+                            <div style="background: rgba(54,255,0,0.43); color: white;display: flex; justify-content: center; border-radius: 20px;padding: 1px">
+                                {{ record.status }}
+                            </div>
+                        {% endif %}
+                    </td>
+                {% if record.status == 'Не оплачено' %}
+                    <td class="tdData"><a class="funcButt" style="background: #007bff; margin-right: 10px" href="{% url "buyRecord" id=record.id  %}">Оплатить</a><a class="funcButt" style="background: red;" href="{% url "deleteRecord" id=record.id  %}">Удалить</a> </td>
+                {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        
+        <table  id="section-Paid" class="section">
+                <thead class="headerTable">
+                    <tr >
+                        <th>Тренер</th>
+                        <th>Тип тренировки</th>
+                        <th>Запись</th>
+                        <th>Стоимость</th>
+                        <th>Статус</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                
+                {% for record in recordsPaid %}
+                    
+                <tr class="rowData">
+                    <td class="tdData">{{ record.trainer.last_name }} {{ record.trainer.first_name }} {{ record.trainer.patronymic }}</td>
+                    <td class="tdData">{{ record.typeTraining }}</td>
+                    <td class="tdData">{{ record.dateTime }}</td>
+                    <td class="tdData">{{ record.amount }}</td>
+                    <td class="tdData">
+                        {% if record.status == 'Не оплачен' %}
+                            <div style="background: rgba(159,0,0,0.22); color: white; display: flex; justify-content: center; border-radius: 20px;padding: 1px">
+                                {{ record.status }}
+                            </div>
+                        {% elif record.status == 'Оплачено' %}
+                            <div style="background: rgba(54,255,0,0.43); color: white;display: flex; justify-content: center; border-radius: 20px;padding: 1px">
+                                {{ record.status }}
+                            </div>
+                        {% endif %}
+                    </td>
+                {% if record.status == 'Не оплачено' %}
+                    <td class="tdData"><a class="funcButt" style="background: #007bff; margin-right: 10px" href="{% url "buyRecord" id=record.id  %}">Оплатить</a><a class="funcButt" style="background: red;" href="{% url "deleteRecord" id=record.id  %}">Удалить</a> </td>
+                {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        <table  id="section-Unpaid" class="section">
+                <thead class="headerTable">
+                    <tr >
+                        <th>Тренер</th>
+                        <th>Тип тренировки</th>
+                        <th>Запись</th>
+                        <th>Стоимость</th>
+                        <th>Статус</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                
+                {% for record in recordsUnpaid %}
+                    
+                <tr class="rowData">
+                    <td class="tdData">{{ record.trainer.last_name }} {{ record.trainer.first_name }} {{ record.trainer.patronymic }}</td>
+                    <td class="tdData">{{ record.typeTraining }}</td>
+                    <td class="tdData">{{ record.dateTime }}</td>
+                    <td class="tdData">{{ record.amount }}</td>
+                    <td class="tdData">
+                        {% if record.status == 'Не оплачено' %}
+                            <div style="background: rgba(159,0,0,0.22); color: white; display: flex; justify-content: center; border-radius: 20px;padding: 1px">
+                                {{ record.status }}
+                            </div>
+                        {% elif record.status == 'Оплачено' %}
+                            <div style="background: rgba(54,255,0,0.43); color: white;display: flex; justify-content: center; border-radius: 20px;padding: 1px">
+                                {{ record.status }}
+                            </div>
+                        {% endif %}
+                    </td>
+                {% if record.status == 'Не оплачено' %}
+                    <td class="tdData"><a class="funcButt" style="background: #007bff; margin-right: 10px" href="{% url "buyRecord" id=record.id  %}">Оплатить</a><a class="funcButt" style="background: red;" href="{% url "deleteRecord" id=record.id  %}">Удалить</a> </td>
+                {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </main>
+     <script>
+      function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+          section.style.display = 'none';
+        });
+        document.getElementById('section-' + sectionId).style.display = 'table';
+      }
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        showSection('All');
+      });
+      
+    </script>
+{% endblock %}

@@ -1,0 +1,82 @@
+{%extends "base/base.html" %}
+    {% block page %}
+        {% load static %}
+    <main style="min-height: 100vh; background: white; padding: 0 20px">
+    <div class="content">
+    
+        <!-- Таблица Пользователей -->
+        <div id="section-users" class="section" >
+             <div style="width: 100%; display: flex">
+                    <div style="width: 100%; ">
+                        <input id="search-trainers" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                    </div>
+                   <div class="block_add">
+                        <a href="" class="addDate">Добавить</a>
+                   </div> 
+             </div>
+            <div style="height: 800px;overflow-y: scroll;">
+                <table>
+                    <thead class="headerTable" >
+                        <tr>
+                            <th>Тренер</th>
+                            <th>Номер тренера</th>
+                            <th>Клиент</th>
+                            <th>Номер клиента</th>
+                            <th>Тип тренировки</th>
+                            <th>Цена</th>
+                            <th>Дата</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-trainers">
+                    {% for timeTable in timeTable %}
+                        <tr class="rowData">
+                            <td  class="tdData"> {{ timeTable.trainer.last_name }} {{ timeTable.trainer.first_name }} {{ timeTable.trainer.patronymic }}</td>
+                            <td  class="tdData">{{ timeTable.trainer.phone }}</td>
+                            <td class="tdData">{{ timeTable.member.last_name }} {{ timeTable.member.first_name }} {{ timeTable.member.patronymic }}</td>
+                            <td class="tdData">{{ timeTable.member.phone }}</td>
+                            <td class="tdData">{{ timeTable.typeTraining }}</td>
+                            <td class="tdData">{{ timeTable.trainer.price }}</td>
+                            <td class="tdData">{{ timeTable.dateTime }}</td>
+                            <td class="tdData">
+                                <a class="action-btn edit" href="" >Редактировать</a>
+                                <a class="action-btn delete" href="" >Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </main>
+        <script>
+      
+      
+   document.addEventListener('DOMContentLoaded', () => {
+  // Функция для фильтрации таблицы
+  function setupSearch(inputId, tbodyId) {
+    const input = document.getElementById(inputId);
+    const tbody = document.getElementById(tbodyId);
+    input.addEventListener('input', () => {
+      const filter = input.value.toLowerCase();
+      const rows = tbody.querySelectorAll('tr');
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        let match = false;
+        cells.forEach(cell => {
+          if (cell.textContent.toLowerCase().includes(filter)) {
+            match = true;
+          }
+        });
+        row.style.display = match ? '' : 'none';
+      });
+    });
+  }
+
+  // Настройка поиска для каждой секции
+  setupSearch('search-trainers', 'tbody-trainers');
+  
+});
+        </script>
+{% endblock %}

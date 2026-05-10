@@ -1,0 +1,83 @@
+footer {
+    border-radius:  20px 20px 0 0;
+  background-color: #222; /* Темный фон */
+  color: #fff; /* Цвет текста */
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Стиль для блока навигации */
+.navigation_footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* Стиль для групп ссылок */
+.link_footer {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* Ссылки навигации */
+.navigation_footer_link {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s;
+  font-weight: 500;
+}
+
+.navigation_footer_link:hover {
+  color: #00aaff;
+}
+
+/* Блок контактов */
+.contact_footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.contact_footer_title {
+  font-weight: bold;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.contact_footer_link {
+  color: #ccc;
+  text-decoration: none;
+  margin-bottom: 4px;
+  transition: color 0.3s;
+}
+
+.contact_footer_link:hover {
+  color: #00aaff;
+}
+
+/* Социальный блок */
+.social_block {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #999;
+}
+
+.social_block p {
+    color: white;
+  margin: 0;
+}
+
+/* Ссылка на социальную сеть */
+.social_link {
+  color: #00aaff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.social_link:hover {
+  color: #ff5500;
+}

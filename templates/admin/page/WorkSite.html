@@ -1,0 +1,160 @@
+{%extends "base/base.html" %}
+    {% block page %}
+        {% load static %}
+    <main style="min-height: 100vh; background: white; padding: 0 20px">
+    
+    <nav>
+        <button onclick="showSection('preview')">Превью</button>
+        <button onclick="showSection('tags')">Тэги</button>
+        <button onclick="showSection('rooms')">Пространство</button>
+    </nav>
+    <hr>
+    <div class="content">
+        <div id="section-preview" class="section" >
+             <div style="width: 100%; display: flex">
+                    <div style="width: 100%; ">
+                        <input id="search-members" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                    </div>
+                   <div class="block_add">
+                        <a href="" class="addDate">Добавить</a>
+                   </div> 
+             </div> 
+            <div style="height: 800px;overflow-y: scroll;">
+                <table>
+                    <thead class="headerTable">
+                        <tr class="rowData">
+                            <th>Изображение</th>
+                            <th>Заголовок</th>
+                            <th>Описание</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-members">
+                    {% for preview in preview %}
+                        <tr class="rowData">
+                            <td class="tdData"><img src="{{ preview.image.url }}"></td>
+                            <td class="tdData">{{ preview.title }}</td>
+                            <td class="tdData">{{ preview.description }}</td>
+                            <td class="tdData">
+                                <a class="action-btn edit" href="" >Редактировать</a>
+                                <a class="action-btn delete" href="" >Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Таблица Категорий -->
+        <div id="section-tags" class="section" style="display:none;">
+            <div style="width: 100%; display: flex">
+                    <div style="width: 100%; ">
+                        <input id="search-trainers" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                    </div>
+                   <div class="block_add">
+                        <a href="" class="addDate">Добавить</a>
+                   </div> 
+            </div>
+            <div style="height: 800px;overflow-y: scroll;">
+                <table>
+                    <thead class="headerTable">
+                        <tr>
+                            <th>Изображение</th>
+                            <th>Описание</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-trainers">
+                    {% for getPreviewTag in getPreviewTags %}
+                        <tr class="rowData">
+                            <td class="tdData"><img src="{{ getPreviewTag.image.url }}" ></td>
+                            <td class="tdData">{{ getPreviewTag.description }}</td>
+                            <td class="tdData">
+                                <a class="action-btn edit" href="">Редактировать</a>
+                                <a class="action-btn delete" href="" >Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="section-rooms" class="section" style="display:none;">
+            <div style="width: 100%; display: flex">
+                    <div style="width: 100%; ">
+                        <input id="search-subscriptions" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                    </div>
+                   <div class="block_add">
+                        <a href="" class="addDate">Добавить</a>
+                   </div> 
+            </div>
+            <div style="height: 800px;overflow-y: scroll;">
+                <table>
+                    <thead class="headerTable">
+                        <tr>
+                            <th>Изображение</th>
+                            <th>Название</th>
+                            <th>Описание</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-subscriptions">
+                    {% for room in rooms %}
+                        <tr class="rowData"> 
+                            <td class="tdData"><img src="{{ room.image.url}}"></td>
+                            <td class="tdData">{{ room.title }}</td>
+                            <td class="tdData">{{ room.description }}</td>
+                            <td class="tdData">
+                                <a class="action-btn edit" href="" >Редактировать</a>
+                                <a class="action-btn delete" href="" >Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+    <script>
+            function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+          section.style.display = 'none';
+        });
+        document.getElementById('section-' + sectionId).style.display = 'block';
+      }
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        showSection('preview');
+      });
+      
+      
+   document.addEventListener('DOMContentLoaded', () => {
+  // Функция для фильтрации таблицы
+  function setupSearch(inputId, tbodyId) {
+    const input = document.getElementById(inputId);
+    const tbody = document.getElementById(tbodyId);
+    input.addEventListener('input', () => {
+      const filter = input.value.toLowerCase();
+      const rows = tbody.querySelectorAll('tr');
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        let match = false;
+        cells.forEach(cell => {
+          if (cell.textContent.toLowerCase().includes(filter)) {
+            match = true;
+          }
+        });
+        row.style.display = match ? '' : 'none';
+      });
+    });
+  }
+
+  // Настройка поиска для каждой секции
+  setupSearch('search-members', 'tbody-members');
+  setupSearch('search-trainers', 'tbody-trainers');
+  setupSearch('search-subscriptions', 'tbody-subscriptions');
+  
+});
+    </script>
+{% endblock %}

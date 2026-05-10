@@ -1,0 +1,95 @@
+.statistics{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.statisticsBar{
+    padding: 10px;
+    align-self: start;
+    background: white;
+    box-shadow: 0 0 2px black;
+    border-radius: 20px;
+    width: 440px;
+    height: 150px;
+    margin: 15px;
+}
+.statisticsText{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    height: 100%;
+    width: 70%;
+}
+.statisticsText h2{
+    font-size: 30px;
+}
+.statisticsImg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 30%;
+}
+.statisticsImg img{
+    height: 50%;
+    width: 80%;
+}
+.statisticsTitle{
+
+    margin: 15px;
+    display: flex;
+    justify-content: left;
+    width: 100%;
+
+}
+
+.statisticsBlock{
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.graphBlock{
+    display: flex;
+}
+.graph{
+    background: white;
+     border-radius: 20px; padding: 20px; box-shadow: 0 0 5px black; margin-right: 10px
+}
+.topMembers{
+    height: 320px; width: 300px; border-radius: 20px; padding: 10px; box-shadow: 0 0 5px black;
+}
+.topMemberTitle{
+    width: 100%;
+}
+.topMemberTitle h1{
+    margin: 5px;
+    font-size: 20px;
+}
+.topMember{
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+.topMember img{
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+}
+.visitsCount{
+    display: flex;
+    justify-self: right;
+    color: white;
+    background: #6a6a6a;
+    border-radius: 5px;
+    padding: 5px;
+}
+.nameMember{
+    width: 230px;
+    display: flex;
+    justify-self: left;
+}

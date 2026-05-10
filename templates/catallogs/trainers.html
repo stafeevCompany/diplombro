@@ -1,0 +1,55 @@
+{%extends "catallogs/catalogs.html" %}
+{% block catalog %}
+    {% load static %}
+    <main style="min-height: 100vh;" >
+            <div class="block_trainers" id="tabs">
+                {% for trainer in trainers %}
+                    <a href="{% url 'page_trainer' id=trainer.id %}" style="text-decoration: none">
+                         <div class="card_trainer" data-category="{{ trainer.coach_type.name }}">
+                            <img class="image_trainer" src="{{trainer.image.url}}" alt="Картинка услуги">
+                             <div class="text_trainer">
+                                <h2 class="title_trainer">{{ trainer.first_name }} {{ trainer.last_name }} {{ trainer.patronymic }}</h2>
+                                <p class="type_trainer">Специальность: {{ trainer.coach_type.name }}</p> 
+                             </div>
+                        </div>
+                    </a>
+               {% endfor %}
+            </div>
+            <div class="pagination" id="pagination" style="justify-self: center">
+                <!-- Ссылки генерируются JavaScript -->
+            </div>
+    </main>
+    <script >
+    async function createPayment(trainerId) {
+  const response = await fetch('/api/create-payment-intent/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ trainer_id: trainerId }),
+  });
+  const data = await response.json();
+  if (response.ok) {
+    // Используем Stripe.js для подтверждения платежа
+    const stripe = Stripe('ваш_публичный_ключ');
+    const result = await stripe.confirmCardPayment(data.clientSecret, {
+      payment_method: {
+        card: elements.getElement('card'), // элемент карты, созданный через Stripe.js
+        billing_details: {
+          name: 'Имя клиента', // можно получать из формы
+        },
+      },
+    });
+    if (result.error) {
+      // Обработка ошибок
+      alert('Ошибка платежа: ' + result.error.message);
+    } else if (result.paymentIntent.status === 'succeeded') {
+      alert('Платеж прошел успешно!');
+      // Можно обновить статус или перенаправить
+    }
+  } else {
+    alert('Ошибка получения платежа: ' + data.error);
+  }
+}
+    </script>
+{% endblock %}

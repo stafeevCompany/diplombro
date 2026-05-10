@@ -1,0 +1,118 @@
+{%extends "base/base.html" %}
+{% block page %}
+    {% load static %}
+    <main class="profile_fon">
+        <div class="data_block">
+            <div class="block_private_data">
+                <div class="block_info_user">
+                    <img src="{{member.image.url}}" alt="">
+                    <div class="private_data">
+                       <h1 style="font-size: 30px; text-align: left">{{member.last_name}} {{member.first_name}} {{member.patronymic}}</h1>
+                        <p style="font-size: 20px; text-align: left">Дата рождения: {{member.date_of_birth}}</p>
+                        <p style="font-size: 20px; text-align: left">Номер телефона: {{user.phone}}</p>
+                    </div>
+                </div>
+                <hr style="color: white; width: 100%">
+                <div class="block_button_edit">
+                    <a href="{% url 'editProfile' %}">Изменить данные</a>
+                </div>
+            </div>
+            
+            
+            
+            
+        </div>
+        <div style="display: flex;justify-content: center; width: 100% " >
+            <div class="card" style="margin-right: 20px">
+                <div style="width: 100%">
+                        <h1 style="text-align: left; font-size: 30px"><span style="color: #007bff">Gym</span> Center</h1>
+                </div>
+                <div style="display: flex; height: 310px;">
+                   <div class="qr_code">
+                        <img src="{{card.qr_code.url}}" alt="">
+                   </div>
+                    <div class="nubmer">
+                        <div>
+                          <h3 style="color: black">{{card.code}}</h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="visit_block" style="margin-right: 20px">
+                <h1 style="text-align: center; font-size: 30px">Посещения</h1>
+                <div class="progress-bar" style="display: flex; justify-content: center; align-items: center; height: 80%">
+                    {% if activeSubscription.is_active == True %}
+                        <h1 style="color: black; font-size: 30px">{{ remainingVisits }}/{{ maxVisits }} дней</h1>
+                    {% else %}
+                        <h1 style="color: gray; font-size: 30px">Оформите абонемент +</h1>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="notification_block" >
+                <h1 style="text-align: center; font-size: 30px">Действующий абонемент</h1>
+                <div class="" style="display: flex; justify-content: center; align-items: center; height: 80%" >
+                    {% if activeSubscription.is_active == True %}
+                        <h1 style="color: black; font-size: 30px">{{ activeSubscription.subscription.title }}</h1>
+                        {% else %}
+                        <h1 style="color: gray; font-size: 30px">Оформите абонемент +</h1>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="block_history_buy">
+            <div class="history_buy">
+             <h1 style="font-size: 30px" >История покупок</h1>
+                {% for buySubscription in  buySubscriptions %}
+                <div class="cardHistory" {% if buySubscription.is_active == False %}style="background: #6a6a6a"{% endif %}>
+                    <p>{{ buySubscription.subscription }}</p>
+                    <p>{{ buySubscription.start_date }} - {{ buySubscription.end_date }}</p>
+                </div>
+                    
+                {% endfor %}
+            </div>
+        </div>
+    
+    
+    
+    
+<div id="balanceModal" class="modal" style="display:none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5);">
+    <div class="modal-content" style="background-color: #fff; margin: 10% auto; padding: 20px; border-radius: 10px; width: 400px; max-width: 90%;">
+        <h1 style="text-align:center;">Пополнение баланса</h1>
+        <div class="addMoney_form_block">
+            <form class="addMoney_form" method="POST" >
+                {% csrf_token %}
+                <label for="">Номер карты</label>
+                <input class="numberCard" type="text" name="numberCard" placeholder="Номер карты" required/>
+
+                <label for="">Дата окончания</label>
+                <input class="dateCard" type="date" name="dateCard" placeholder="Дата" required/>
+
+                <label for="">Код</label>
+                <input class="codeCard" type="text" name="codeCard" placeholder="Код" required/>
+
+                <label for="">Сумма</label>
+                <input class="countMoney" type="number" name="countMoney" placeholder="Сумма" required/>
+
+                <button class="button_addMoney" type="submit">Добавить</button>
+                <button type="button" id="closeModal" style="margin-top:10px;">Закрыть</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('openModalBtn').onclick = function() {
+        document.getElementById('balanceModal').style.display = 'block';
+    };
+    document.getElementById('closeModal').onclick = function() {
+        document.getElementById('balanceModal').style.display = 'none';
+    };
+    // Закрытие при клике вне окна
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('balanceModal')) {
+            document.getElementById('balanceModal').style.display = 'none';
+        }
+    };
+</script>
+    </main>
+{% endblock %}

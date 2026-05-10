@@ -1,0 +1,77 @@
+{%extends "base/base.html" %}
+    {% block page %}
+        {% load static %}
+    <main style="min-height: 100vh; background: white; padding: 0 20px">
+    <div class="content">
+    
+        <!-- Таблица Пользователей -->
+        <div id="section-users" class="section" >
+             <div style="width: 100%; display: flex">
+                    <div style="width: 100%; ">
+                        <input id="search-members" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                    </div>
+                   <div class="block_add">
+                        <a href="" class="addDate">Добавить</a>
+                   </div> 
+             </div> 
+            <div style="height: 800px;overflow-y: scroll;">
+                <table>
+                    <thead class="headerTable">
+                        <tr>
+                            <th>Изображение</th>
+                            <th>ФИО</th>
+                            <th>Телефон</th>
+                            <th>Персональная карта</th>
+                            <th>Дата</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-members">
+                    {% for visit in visits %}
+                        <tr class="rowData">
+                            <td class="tdData"><img src="{{ visit.member.image.url }}"></td>
+                            <td class="tdData">{{ visit.member.last_name }} {{ visit.member.first_name }} {{ visit.member.patronymic }}</td>
+                            <td class="tdData">{{ visit.phone.personal_card.code }}</td>
+                            <td class="tdData">{{ visit.member.personal_card.code }}</td>
+                            <td class="tdData">{{ visit.visitDate }}</td>
+                            <td class="tdData">
+                                <a class="action-btn edit" href="" >Редактировать</a>
+                                <a class="action-btn delete" href="" >Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+        <script>
+      
+      
+   document.addEventListener('DOMContentLoaded', () => {
+  // Функция для фильтрации таблицы
+  function setupSearch(inputId, tbodyId) {
+    const input = document.getElementById(inputId);
+    const tbody = document.getElementById(tbodyId);
+    input.addEventListener('input', () => {
+      const filter = input.value.toLowerCase();
+      const rows = tbody.querySelectorAll('tr');
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        let match = false;
+        cells.forEach(cell => {
+          if (cell.textContent.toLowerCase().includes(filter)) {
+            match = true;
+          }
+        });
+        row.style.display = match ? '' : 'none';
+      });
+    });
+  }
+
+  // Настройка поиска для каждой секции
+  setupSearch('search-members', 'tbody-members');
+});
+        </script>
+{% endblock %}

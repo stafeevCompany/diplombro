@@ -1,0 +1,46 @@
+.addMoney_form_block{
+    justify-self: center ;
+    width: 45%;
+    height: 50vh;
+    background: black;
+    border-radius: 20px;
+    position: absolute;
+    padding: 10px;
+    top: 20%;
+    bottom: 50%;
+    right: 50%;
+    left: 50%;
+}
+.addMoney_form{
+    margin: 20px;
+}
+.numberCard{
+    color: white;
+    font-size: 20px;
+    background: transparent;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid white;
+    margin-bottom: 20px;
+}
+.dateCard{
+    margin-top: 20px;
+    justify-self: left;
+    color: white;
+    font-size: 20px;
+    background: transparent;
+    width: 30%;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid white;
+    margin-bottom: 20px;
+}
+
+.button_addMoney{
+    background: forestgreen;
+    border-radius: 20px;
+    color: white;
+    padding: 10px 20px   10px 20px;
+    font-weight: bolder;
+}

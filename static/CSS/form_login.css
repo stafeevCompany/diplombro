@@ -1,0 +1,85 @@
+.login_form_block{
+    margin-top: 30px;
+    margin-bottom: 200px;
+    display: flex;
+    background: rgb(255, 255, 255);
+    border-radius: 20px;
+    justify-self: center;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    padding: 30px;
+    border: 1px solid #e3e3e3;
+    box-shadow: 5px 5px 20px #000000;
+}
+.login_form{
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
+}
+.login_form p{
+    margin: 5px;
+}
+.login_form_preview{
+    height: 100%;
+    justify-content: center;
+    position: relative;
+ }
+.login_form_preview h3{
+ }
+.login_form_preview img{
+    justify-self: center;
+    top: 20px;
+    bottom: 0;
+    position: absolute;
+    height: 400px;
+}
+.login_form h1 {
+    margin-bottom: 30px;
+    color: #a50045;
+    font-size: 40px;
+}
+
+.login_form_text h3{
+    text-align: center;
+    color: white;
+}
+.login_form a h2{
+    color: white;
+}
+.login_form input{
+    background: transparent ;
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 300px;
+    height: 45px;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid black;
+    margin-bottom: 20px;
+}
+.login_form input:focus{
+    outline: none;
+    background-color: transparent ;
+    border: none;
+    border-bottom: 2px solid black;
+}
+.button_exit {
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+     display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 20px;
+    width: 300px;
+    height: 50px;
+    background: rgba(97, 221, 117, 0.94);
+}
+.link_registration{
+    text-decoration: none;
+    font-weight: bold;
+    color: #000;
+}

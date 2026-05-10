@@ -1,0 +1,91 @@
+aside{
+    position: fixed;
+    z-index: 200;
+    background: white;
+    width: 4.5%;
+    box-shadow: black 0 0 10px ;
+    border-radius: 0 20px 20px 0;
+    align-self: center;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+
+    left: 0;
+
+}
+.asideLink{
+    height: 50px;
+}
+.asideLink:hover{
+    border-radius: 20px;
+    background: rgba(110, 110, 110, 0.35);
+}
+.imgAsideUser{
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+}
+.imgAsideUserLink{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    justify-self: center;
+}
+
+.imgAsideNav{
+    margin-left: 10px;
+    margin-right: 5px;
+    display: flex;
+    justify-self: center;
+    width: 40px;
+    height: 40px;
+}
+
+hr{
+    margin: 0;
+}
+
+
+aside:hover div{
+    width: 100%;
+}
+aside a p{
+    display: none;
+}
+aside:hover a p{
+    align-self: center;
+    display: flex;
+}
+.logoutUserLink{
+height: 50px;}
+aside:hover .logoutUserLink{
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+}
+.logoutUserLink:hover{
+    border-radius: 20px;
+    background: rgba(110, 110, 110, 0.35);
+}
+aside a{
+    color: black;
+    display: flex;
+    text-decoration: none;
+}
+aside:hover{
+    width: 220px;
+}
+.tabsAside{
+    height: 75%;
+}
+
+aside p{
+    color: black;
+}
+
+
+
+.logoutUserLink{
+    display: flex;
+    align-self: end;
+}
+

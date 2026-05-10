@@ -1,0 +1,20 @@
+{%extends "base/base.html" %}
+{% block page %}
+    <main style="min-height: 100vh; align-content: center; ">
+        <div class="login_form_block" >
+            <form class="login_form" method="POST">
+                {% csrf_token %}
+                <h1>Регистрация</h1>
+                
+                <input type="text" id="lastname" name="lastname" placeholder="Фамилия" required>
+                <input type="text" id="firstname" name="firstname" placeholder="Имя" required>
+                <input type="text" id="patronymic" name="patronymic" placeholder="Отчество" required>
+                <input type="date" id="birthday" name="birthday" placeholder="Дата рождения" required>
+                <input type="tel" id="login" name="phone" placeholder="Телефон" required>
+                <input type="text" id="password" name="password" placeholder="Введите пароль" required>
+                <button class="button_exit" type="submit">Зарегистрироваться</button>
+                <p>У вас есть аккаунт?<a class="link_registration" href="{% url 'login' %}"> Войти?</a></p>
+            </form>
+        </div>
+    </main>
+{% endblock %}

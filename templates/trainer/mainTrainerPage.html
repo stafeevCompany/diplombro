@@ -1,0 +1,104 @@
+{%extends "base/base.html" %}
+    {% block page %}
+        {% load static %}
+        <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+<script type="text/javascript">
+window.onload = function () {
+    // Предположим, что visits_json — это переменная, содержащая JSON-данные
+    const visitsData = {{ visits_json|safe }};
+
+    // Формируем dataPoints для CanvasJS
+    const dps = visitsData.map(item => ({
+        x: new Date(item.date),
+        y: item.count
+    }));
+
+    var chart3 = new CanvasJS.Chart("visitsTrainerGraph", {
+        title: {
+            fontSize: 20,
+            text: "Посещения клиентов за последние 7 дней"
+        },
+        data: [{
+            lineThickness: 3,
+            type: "line",
+            dataPoints: dps,
+            color: "lightblue",
+            lineColor: "#007bff",
+        }],
+        axisX: {
+            valueFormatString: "DD MMM",
+            intervalType: "day",
+            interval: 1,
+        },
+        axisY: {
+            fontSize: 14,
+            interval: 1,
+            includeZero: true
+        },
+    });
+    chart3.render();}
+</script>
+        
+    <main style="min-height: 100vh">
+    <header>
+        <h1>Статистика</h1>
+    </header>
+        <div style="padding: 10px">
+            <div style="display: flex; padding: 10px">
+                <div id="visitsTrainerGraph" class="graph" style="height: 300px; width: 900px;">
+                </div>
+                 <div class="topMembers">
+                <div class="topMemberTitle">
+                    <h1>Частые клиент</h1>
+                    <p style="margin-bottom: 5px"> {{ visitsTopMembers.member.last_name}} {{ visitsTopMembers.member.first_name}} {{ visitsTopMembers.member.patronymic}}</p>
+                </div>
+                <div style="overflow-x: auto">
+                    {% for visitsOftenMember in visits_often_members %}
+                        <hr>
+                        <div class="topMember">
+                        
+                            <img src="../../static/mainAdminPage/free-icon-user-1077114.png">
+                            <p class="nameMember">{{ visitsOftenMember.last_name}} {{ visitsOftenMember.first_name}} {{ visitsOftenMember.patronymic}}</p>
+                            <p class="visitsCount">{{ visitsOftenMember.training_count}}</p>
+                        
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div style="">
+               <div class="block_salary">
+                   <div style="width: 100%; padding: 10px">
+                      <p>Зараплата за месяц</p> 
+                   </div>
+                   <div style="display: flex; justify-content: center; align-items: center">
+                       <div style="width: 100%">
+                          <h2 style="text-align: center">{{ total_training_payment }} ₽</h2> 
+                       </div>
+                        <div style="width: 100px; display: flex; justify-content: right">
+                           <img style="width: 100%; height: 100%" src="../../static/trainerPage/free-icon-money-2969764.png">   
+                        </div>
+                       
+                   </div>
+                    
+                </div> 
+                
+                <div class="block_salary">
+                   <div style="width: 100%; padding: 10px">
+                      <p>Проведено тренировок за месяц</p> 
+                   </div>
+                   <div style="display: flex; justify-content: center; align-items: center">
+                       <div style="width: 100%">
+                          <h2 style="text-align: center">{{ trainings_this_month }}</h2> 
+                       </div>
+                        <div style="width: 100px; display: flex; justify-content: right">
+                           <img style="width: 100%; height: 100%" src="../../static/trainerPage/free-icon-money-2969764.png">   
+                        </div>
+                       
+                   </div>
+                    
+                </div>
+            </div>
+        </div>
+        </div>
+</main>
+{% endblock %}

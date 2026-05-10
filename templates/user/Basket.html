@@ -1,0 +1,38 @@
+{%extends "catallogs/catalogs.html" %}
+{% block catalog %}
+    {% load static %}
+    <main style="min-height: 100vh">
+    <div class="block_BasketItem">
+        {% for basketItems in basketItems %}
+            <a href="" style="text-decoration: none; color: black" >
+                <div class="card_basket">
+                    <div style="display: flex">
+                      <div style="display: flex; flex: 70%">
+                            <img src="{{basketItems.item.img.url}}" alt="К">
+                            <div class="blockTextBasket">
+                                <h2 style="margin-bottom: 10px">{{basketItems.item.title}}</h2>
+                                <p>{{ basketItems.item.description}}</p>
+                                <p>Количество: {{ basketItems.quantity}}x{{ basketItems.item.price}} ₽</p>
+                            </div>
+                      </div>
+                      <div style="display: flex; align-items: center; justify-content: center">
+                            <h1>{{basketItems.price}} ₽</h1>
+                      </div>
+                    </div>
+                    <div class="functionBasket">
+                        <div style="background: red; display: flex; align-items: center; justify-content: center; border-radius: 10px; width: 40px; height: 40px; margin-right: 10px ">
+                            <a href="{% url 'deleteBasketItem' id=basketItems.id %}"><img src="../../static/shop/free-icon-garbage-535246.png" alt=""></a>
+                        </div>
+                        <div>
+                            <a href="{% url 'buyItem' id=basketItems.id %}" style="background: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 10px">Купить</a>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="pagination" id="pagination" style="justify-self: center">
+        <!-- Ссылки генерируются JavaScript -->
+    </div>
+    </main>
+{% endblock %}

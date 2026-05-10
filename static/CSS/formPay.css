@@ -1,0 +1,25 @@
+.formPay{
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #535353;
+    width: 30%;
+    padding: 10px;
+   height: 400px;
+    display: flex;
+    align-items: center;
+}
+.buttonPay{
+    margin-top: 20px;
+    color: white;
+    font-weight: bolder;
+    background: #007bff;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+}
+.inputPay{
+    margin-bottom: 20px;
+    margin-top: 50px;
+    border-bottom: 2px solid #6e6e6e;
+}

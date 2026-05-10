@@ -1,0 +1,143 @@
+{%extends "base/base.html" %}
+    {% block page %}
+        {% load static %}
+    <main style="min-height: 100vh; background: white; padding: 0 20px">
+    <nav>
+        <button onclick="showSection('subscription')">Абонементы</button>
+        <button onclick="showSection('coach')">Тренера</button>
+    </nav>
+    <hr>
+    <div class="content">
+        <div id="section-subscription" class="section" >
+              <div style="width: 100%; display: flex">
+                    <div style="width: 100%; ">
+                        <input id="search-subscriptions" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                    </div>
+                   <div class="block_add">
+                        <a href="" class="addDate">Добавить</a>
+                   </div> 
+              </div>
+               <div style="height: 800px;overflow-y: scroll;">
+                    <table>
+                        <thead class="headerTable">
+                            <tr>
+                                <th>Клиент</th>
+                                <th>Тренер</th>
+                                <th>Расписание</th>
+                                <th>Тип тренировки</th>
+                                <th>Цена</th>
+                                <th>Дата оплаты</th>
+                                <th>Метод оплаты</th>
+                                <th>Статус</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-subscriptions">
+                        {% for trainingPayment in trainingPayments %}
+                            <tr class="rowData">
+                                <td class="tdData">{{ trainingPayment.member.first_name }} {{ trainingPayment.member.last_name }} {{ trainingPayment.member.patronymic }}</td>
+                                <td class="tdData">{{ trainingPayment.coach.first_name }} {{ trainingPayment.coach.last_name }} {{ trainingPayment.coach.patronymic }}</td>
+                                <td class="tdData">{{ trainingPayment.timetable.dateTime }}</td>
+                                <td class="tdData"></td>
+                                <td class="tdData">{{ trainingPayment.amount_paid }}</td>
+                                <td class="tdData">{{ trainingPayment.payment_date }}</td>
+                                <td class="tdData">{{ trainingPayment.payment_method.name }}</td>
+                                <td class="tdData">{{ trainingPayment.is_successful }}</td>
+                                <td class="tdData">
+                                    <a class="action-btn edit" href="" >Редактировать</a>
+                                    <a class="action-btn delete" href="" >Удалить</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+               </div>
+              </div>
+    
+        <div id="section-coach" class="section" style="display:none;">
+             <div style="width: 100%; display: flex">
+                    <div style="width: 100%; ">
+                        <input id="search-trainers" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                    </div>
+                   <div class="block_add">
+                        <a href="" class="addDate">Добавить</a>
+                   </div> 
+             </div>
+            <div style="height: 800px;overflow-y: scroll;">
+                <table>
+                    <thead class="headerTable">
+                        <tr>
+                            <th>Клиент</th>
+                            <th>Абонемент</th>
+                            <th>Расписание</th>
+                            <th>Цена</th>
+                            <th>Дата оплаты</th>
+                            <th>Дата начала абонемента/Дата окончания абонемента</th>
+                            <th>Метод оплаты</th>
+                            <th>Статус</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-trainers">
+                    {% for subscriptionPayment in  subscriptionPayments%}
+                        <tr class="rowData">
+                            <td class="tdData">{{ subscriptionPayment.member.first_name }} {{ subscriptionPayment.member.last_name }} {{ subscriptionPayment.member.patronymic }}</td>
+                            <td class="tdData">{{ subscriptionPayment.subscription.title }}</td>
+                            <td class="tdData">{{ subscriptionPayment.amount_paid }}</td>
+                            <td class="tdData">{{ subscriptionPayment.payment_date  }}</td>
+                            <td class="tdData">{{ subscriptionPayment.start_date }}-{{ subscriptionPayment.end_date }}</td>
+                            <td class="tdData">{{ subscriptionPayment.payment_method.name }}</td>
+                            <td class="tdData">{{ subscriptionPayment.is_successful }}</td>
+                            <td class="tdData">
+                                <a class="action-btn edit" href="">Редактировать</a>
+                                <a class="action-btn delete" href="" >Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </main>
+    <script>
+      
+            function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+          section.style.display = 'none';
+        });
+        document.getElementById('section-' + sectionId).style.display = 'block';
+      }
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        showSection('subscription');
+      });
+      
+      
+   document.addEventListener('DOMContentLoaded', () => {
+  // Функция для фильтрации таблицы
+  function setupSearch(inputId, tbodyId) {
+    const input = document.getElementById(inputId);
+    const tbody = document.getElementById(tbodyId);
+    input.addEventListener('input', () => {
+      const filter = input.value.toLowerCase();
+      const rows = tbody.querySelectorAll('tr');
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        let match = false;
+        cells.forEach(cell => {
+          if (cell.textContent.toLowerCase().includes(filter)) {
+            match = true;
+          }
+        });
+        row.style.display = match ? '' : 'none';
+      });
+    });
+  }
+
+  // Настройка поиска для каждой секции
+  setupSearch('search-trainers', 'tbody-trainers');
+  setupSearch('search-subscriptions', 'tbody-subscriptions');
+});
+    </script>
+{% endblock %}

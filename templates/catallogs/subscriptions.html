@@ -1,0 +1,28 @@
+{%extends "catallogs/catalogs.html" %}
+{% block catalog %}
+    {% load static %}
+    <main style=" min-height: 100vh;" >
+    
+    <div class="block_subscriptions">
+        {% for subscription in subscriptions %}
+            <div class="card_subscription" data-category="{{ subscription.category.name }}">
+                <div class="text_subscription">
+                    <h2 class="title_subscription">{{ subscription.title }}</h2>
+                    <ul>
+                        {% for feature in subscription.features.all %}
+                            <li class="list_subscription">✓ <span>{{ feature.name }}</span></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <p class="price_subscription">{{ subscription.price }} ₽/мес</p>
+                <a class="buy_subscription" href="{% url 'buySubscriptions' id=subscription.id %}" >Выбрать</a>  
+            </div>
+        {% endfor %}
+       
+    </div>
+    <div class="pagination" id="pagination" style="justify-self: center">
+        <!-- Ссылки генерируются JavaScript -->
+    </div>
+    </main>
+    
+{% endblock %}

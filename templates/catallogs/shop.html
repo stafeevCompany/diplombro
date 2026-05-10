@@ -1,0 +1,27 @@
+{%extends "catallogs/catalogs.html" %}
+{% block catalog %}
+    {% load static %}
+    <main style=" min-height: 100vh;" >
+    
+    <div class="block_shop">
+        {% for item in items %}
+            <a href="{% url 'pageItem' id=item.id %}" style="text-decoration: none">
+                <div class="card_item" data-category="{{ item.category.title }}">
+                     <img src="{{item.img.url}}" alt="Картинка новсти">
+                    <div class="blockTextItem">
+                        <p class="price_item">{{ item.price }} ₽</p>
+                        <p style="font-size: 20px">{{item.title}}</p>
+                        <p>{{ item.description }}</p>
+                    </div>
+                </div>
+            </a>
+            
+        {% endfor %}
+       
+    </div>
+    <div class="pagination" id="pagination" style="justify-self: center">
+        <!-- Ссылки генерируются JavaScript -->
+    </div>
+    </main>
+    
+{% endblock %}

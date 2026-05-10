@@ -1,0 +1,65 @@
+.main_notification{
+    min-width: 100vh;
+    justify-items: center;
+
+}
+.block_title_notification{
+    width: 100%;
+
+
+}
+
+.block_title_notification h1{
+    font-size: 50px;
+    margin: 5px;
+
+}
+
+.block_notifications{
+
+    height: 110vh;
+    width: 100%;
+    justify-items: center;
+    overflow-y: scroll;
+    scrollbar-color:  black transparent;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.notification{
+    padding: 5px;
+    background: white;
+    border-radius: 20px;
+    margin: 10px;
+    width: 95%;
+}
+.notification_img{
+    align-content: center;
+    justify-content: center;
+    margin-right: 10px;
+
+}
+.notification_title h4{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.notification_img img{
+    border-radius: 20px;
+
+}
+.block_notification_all{
+    width: 85%;
+    align-self: center;
+
+}
+.notification_time{
+    align-items: center;
+    justify-self: right;
+}
+.notification_text p{
+    color: black;
+}
+
+.notification_time p{
+    color: #6a6a6a;
+}

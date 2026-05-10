@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Каталог</title>
+        <link href="{% static 'CSS/header.css' %}" rel="stylesheet" >
+        <link href="{% static 'CSS/body1.css' %}" rel="stylesheet" >
+        <link href="{% static 'CSS/footer.css' %}" rel="stylesheet" >
+        <link href="{% static 'CSS/aside.css' %}" rel="stylesheet" >
+        <link href="{% static 'CSS/news.css' %}" rel="stylesheet" >
+        <link href="{% static 'CSS/subscriptions.css' %}" rel="stylesheet" >
+        <link href="{% static 'CSS/trainers.css' %}" rel="stylesheet" >
+        <link href="{% static 'CSS/shop.css' %}" rel="stylesheet" >
+        <link href="{% static 'CSS/basket.css' %}" rel="stylesheet" >
+</head>
+<body>
+{% if user.is_active == True %}
+    <aside>
+        {% if member %}
+                <a href="{% url 'profile_user' %}" class="imgAsideUserLink"><img class="imgAsideUser" src="{{ member.image.url }}" alt=""/></a>
+            {% elif coach %}
+                <a href="" class="imgAsideUserLink"><img class="imgAsideUser" src="{{ coach.image.url }}" alt=""/></a>
+            {% elif user.role.name == "Администратор" %}
+                <a href="" class="imgAsideUserLink"><img class="imgAsideUser" src="{{ admin.image.url }}" alt=""/></a>
+        {% endif %}
+        <div class="tabsAside">
+            <a href="{% url 'main_page' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/home_3641392.png" alt=""><p>Главная</p></a>
+            <a href="{% url 'subscriptions' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/icons8-карта-30.png" alt=""><p>Абонементы</p></a>
+            <a href="{% url 'news' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/icons8-новости-48.png" alt=""><p>Новости</p></a>
+            <a href="" class="asideLink"><img class="imgAsideNav" src="../../static/aside/notification_7958802.png" alt=""><p>Уведомления</p></a>
+            <a href="{% url 'trainers' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/icons8-тренер-48.png" alt=""><p>Тренера</p></a>
+            <a href="{% url 'records' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-memo-6377988.png" alt=""><p>Записи</p></a>
+
+        </div>
+            <a class="logoutUserLink"  href="{% url "logout" %}"><img class="imgAsideNav" src="../../static/aside/icons8-выход-30.png" alt=""><p>Выход</p></a>
+    </aside>
+{% endif %}
+<div style=" {% if user.is_active == True %}width: 95%;{% else %}width: 100%;{% endif %}   position: relative; justify-self: right;">
+
+    {% if user.is_active == False%}
+        <header>
+        
+            <div class="header_menu">
+                <a class="navigation_header" href="#main">Главная</a>
+                <a class="navigation_header" href="#getTag">Что ты получишь</a>
+                <a class="navigation_header" href="#place">Пространство</a>
+                <a class="navigation_header" href="#subscriptions">Абонементы</a>
+                <a class="navigation_header" href="#news">Новости</a>
+                <a class="navigation_header" href="#trainers" >Тренера</a>
+            </div>
+            <div class="login_user">
+                <div style="justify-content: right; margin-right: 20px;">
+                    <a class="login_button" href="{% url "login" %}">Войти</a>
+                    <a class="registr_button" href="{% url "registration" %}">Зарегистрироваться</a>
+                </div>
+            </div>
+        </header>
+   {% endif %}
+    <div style="display: flex">
+        <div style="display: flex; flex: 50%">
+            <h1 style="color: black; font-size: 50px">{% if subscriptions %}Абонементы{% elif trainers %}Тренера{% elif news %}Новости{% elif items %}Товары{% elif basketItems %}Корзина{% endif %}</h1>
+        </div>
+        {% if items %}
+            <div style="display: flex; justify-content: right; align-items: center; flex: 50%">
+                <a href="{% url 'basket' %}" style="border-radius: 20px; background: #007bff; margin-right: 10px; padding: 10px 15px; display: flex; text-decoration: none; justify-content: center; align-items: center"><img src="../../static/shop/free-icon-shopping-cart-711897.png" alt="" style="width: 30px; height: 30px; margin-right: 10px"><p style="color: white; text-align: left; font-size: 20px">Корзина</p></a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="filters" id="filterButtons">
+        <div style="display: flex; flex-wrap: wrap;  width: 100%;">
+            <button class="filter-btn active" onclick="filterCategory('all'); setActiveFilter(this)">Все</button>
+        {% if subscriptions %}
+            {% for category in category %}
+                <button class="filter-btn" onclick="filterCategory('{{ category}}'); setActiveFilter(this)">
+                    {{  category.name }}</button>
+            {% endfor %}
+        {% elif trainers %}
+            {% for categoryTrainer in categoryTrainer %}
+                <button class="filter-btn" onclick="filterCategory('{{ categoryTrainer }}'); setActiveFilter(this)">
+                    {{ categoryTrainer.name }}</button>
+            {% endfor %}
+        {% elif items %}
+            {% for categoryItem in categoryItem %}
+                <button class="filter-btn" onclick="filterCategory('{{ categoryItem }}'); setActiveFilter(this)">
+                    {{ categoryItem.title }}</button>
+            {% endfor %}
+        {% endif %}
+        </div>
+    </div>
+    
+    {% block catalog %}
+    {% endblock %}
+    
+    <footer>
+        <div class="navigation_footer">
+            <div class="link_footer">
+                <a class="navigation_footer_link">Главная</a>
+                <a class="navigation_footer_link">Пространство</a>
+                <a class="navigation_footer_link">Новости</a>
+                <a class="navigation_footer_link">Тренера</a>
+                <a class="navigation_footer_link">Абонементы</a>
+                <a class="navigation_footer_link">О нас</a> 
+            </div>
+            <div class="contact_footer">
+                <a class="contact_footer_title">Контакты</a>
+                <a class="contact_footer_link">+ 7 (996) 279-11-67</a>
+                
+            </div>
+        </div>
+        <div class="social_block">
+            <p >
+                Сайт разработан
+              <a class="social_link" href="https://github.com/stafeevCompany">
+                StafeevCompany
+              </a>  
+            </p>
+            
+        </div>
+    </footer>
+</div>
+</body>
+
+
+
+
+<script>
+
+function filterCategory(category) {
+    const items = document.querySelectorAll({% if subscriptions %}'.card_subscription'{% elif trainers %}'.card_trainer'{% elif news %}'.card_news'{% elif items %}'card_item'{% endif %});
+
+    items.forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+            item.style.display = '';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+function setActiveFilter(button) {
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+    
+    
+}
+
+
+ document.addEventListener('DOMContentLoaded', function() {
+            const productsPerPage = 18;
+            const allProducts = document.querySelectorAll({% if subscriptions %}'.card_subscription'{% elif trainers %}'.card_trainer'{% elif news %}'.card_news'{% elif items %}'card_item'{% endif %});
+            const totalProducts = allProducts.length;
+            const totalPages = Math.ceil(totalProducts / productsPerPage);
+            const paginationContainer = document.getElementById('pagination');
+            let currentPage = 1;
+
+            // Функция для отображения нужной страницы
+            function showPage(page) {
+                currentPage = page;
+                const startIndex = (page - 1) * productsPerPage;
+                const endIndex = startIndex + productsPerPage;
+
+                allProducts.forEach((product, index) => {
+                    if (index >= startIndex && index < endIndex) {
+                        product.classList.remove('hidden');
+                    } else {
+                        product.classList.add('hidden');
+                    }
+                });
+                renderPagination();
+            }
+
+            // Функция для отрисовки ссылок пагинации
+            function renderPagination() {
+                paginationContainer.innerHTML = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.textContent = i;
+                    if (i === currentPage) {
+                        link.classList.add('current');
+                    }
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showPage(i);
+                    });
+                    paginationContainer.appendChild(link);
+                }
+            }
+
+            // Инициализация: показать первую страницу
+            showPage(1);
+        });
+ 
+ 
+ </script>
+</html>

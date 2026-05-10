@@ -1,0 +1,30 @@
+.block_BasketItem{
+    width: 100%;
+}
+.card_basket{
+    margin: 10px 5px;
+    padding: 10px;
+    border-radius: 20px;
+    height: 300px;
+    width: 97.5%;
+    background: white;
+    box-shadow: 0 0 5px black;
+    color: black;
+}
+
+.card_basket img{
+    height: 250px;
+    width: 250px;
+    border-radius: 20px;
+}
+.functionBasket{
+    align-items: center;
+    justify-content: right;
+    height: 50px;
+    display: flex;
+}
+.functionBasket img{
+    height: 30px;
+    border-radius: 0;
+    width: 30px;
+}

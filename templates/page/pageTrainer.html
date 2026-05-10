@@ -1,0 +1,37 @@
+{%extends "base/base.html" %}
+{% block page %}
+    {% load static %}
+    <main style="min-height: 100vh;" >
+        <div class="block_trainer">
+            <div class="block_all_trainer">
+                <a href="{% url "trainers" %}" class="link_return"><p >◀</p> Все тренеры</a>
+            </div>
+            <div class="block_info_trainer">
+                <div class="block_img_trainer">
+                    <img class="img_trainer" src="{{trainer.image.url}}" alt="">
+                </div>
+                <div class="block_text_trainer">
+                    <div style="height: 70%">
+                        <h3 style="margin-top: 0; color: #686868">{{ trainer.type_coach_id.type_coach_name}}</h3>
+                        <h1 style="color: black">{{ trainer.last_name}} {{ trainer.first_name}}</h1>
+                        <h2 >Образование:</h2>
+                        <ul style="list-style-type: square; " >
+                            {% for education in education %}
+                                <li>{{ education.name }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h2 >Работа направлена на:</h2>
+                        <ul style="list-style-type: square; ">
+                            {% for direction in direction %}
+                                <li>{{ direction.name }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h2 style=" margin-bottom: 5px">Стаж работы:</h2>
+                        <p >{{ trainer.experience}}</p>
+                    </div>
+                    <a class="button_timesheet" href="">Расписание тренера</a>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

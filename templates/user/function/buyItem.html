@@ -1,0 +1,70 @@
+{%extends "base/base.html" %}
+{% block page %}
+    {% load static %}
+    <main style="height: 100vh; display: flex; justify-content: center; align-items: center" >
+    <script src="https://js.stripe.com/v3/"></script>
+      <form id="payment-form1" class="formPay">
+          <div >
+              <h1 style="margin-bottom: 30px; font-size: 30px">Оплата тренировки</h1>
+              <div style=" box-shadow: 0 0 2px black; border-radius: 10px; padding: 5px">
+                  <div style="margin-bottom: 10px"><p style="text-align: left">{{  item.item.title }}</p></div>
+                  <div style="margin-bottom: 10px"><p style="text-align: left"></p></div>
+                  <div style=" display: flex; flex-direction: column;justify-content: flex-end;"><p style="text-align: right"></p></div>
+                  <div style=" display: flex; flex-direction: column;justify-content: flex-end;"><p style="text-align: right">Количество: {{ item.quantity }}</p></div>
+              </div>
+                <div class="inputPay" id="card-element"><!-- Stripe Card Element --></div>
+                <div><p  style="text-align: right">Цена: {{ item.price }} ₽</p></div>
+                <button class="buttonPay" id="submit">Оплатить</button>
+                <p style="font-size: 13px; color: #6a6a6a; margin-top: 10px">Настоящая оферта действует с момента ее размещения на сайте и до ее отмены или изменений.</p>
+                <div  id="error-message"></div>
+          </div>
+          
+        </form>
+    </main>
+    
+<script>
+    const stripe = Stripe('{{stripe_publishable_key}}');
+
+    const form = document.getElementById('payment-form1');
+    const cardElement = stripe.elements().create('card');
+    cardElement.mount('#card-element');
+    
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+    
+      // Вызов сервера для создания PaymentIntent
+      const response = await fetch('{% url 'create_payment_item' id=item.id %}', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      const data = await response.json();
+    
+      if (response.ok) {
+        const clientSecret = data.clientSecret;
+    
+        // Подтверждение платежа
+        const result = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: cardElement,
+          }
+        });
+    
+        if (result.error) {
+          // Обработка ошибки
+        } else {
+          if (result.paymentIntent.status === 'succeeded') {
+            // Платеж прошел успешно
+            alert('Платеж прошел успешно!');
+            window.location.reload();
+            // Можно обновить статус заказа или показать подтверждение
+          }
+        }
+      } else {
+        // Обработка ошибок при создании PaymentIntent
+        alert( data.error || 'Ошибка при создании платежа.');
+      }
+    });
+    </script>    
+{% endblock %}

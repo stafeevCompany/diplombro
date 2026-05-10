@@ -1,0 +1,161 @@
+.block_news{
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+
+}
+.block_news a{
+    margin-right: 5px;
+
+}
+.card_news{
+    margin-right: 20px;
+    margin-top: 20px;
+     position: relative;
+    border-radius: 20px;
+    width: 370px;
+    height: 400px;
+    background: white;
+}
+.card_news h1{
+    width: 100%;
+    height: 100%;
+    background: white;
+}
+.card_news img{
+    display: flex;
+    justify-self: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+
+
+}
+
+
+.card_news:hover .blockTextNews{
+    padding: 10px;
+    display: block;
+    transition: 0.5s;
+    transform: translate(0,0);
+    min-height: 10vh;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 20px;
+    background-color: white;
+    position: absolute;
+    opacity: 1;
+}
+.card_news:hover{
+    transform: translateY(-15px);
+    transition: ease-in-out 300ms;
+}
+.blockTextNews{
+    transform: translate(0,100%)scaleY(0);
+
+}
+
+.card_news h2,p{
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+    padding: 0;
+    margin: 0;
+    color: black;
+
+}
+.card_news h2{
+    padding: 5px;
+}
+
+
+.category_new{
+    align-items: center;
+    display: flex;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.73);
+    border: white solid 2px;
+    color: white;
+    top: 0;
+    right: 0;
+    margin: 20px;
+    font-size: 20px;
+    padding: 5px 10px 5px 10px;
+    border-radius:20px;
+}
+.view_new{
+    text-decoration: none;
+    position: absolute;
+    bottom: 0;
+    border-radius: 20px;
+    background: #316700;
+    text-align: center;
+
+    justify-self: center;
+    width: 90%;
+    padding: 10px;
+    margin: 5px;
+    color: white;
+
+}
+
+.hidden {
+    display: none;
+}
+/* Стиль для блока пагинации */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+  gap: 10px;
+}
+
+.pagination a {
+  padding: 10px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+  background-color: #0056b3;
+}
+
+.current {
+
+    font-weight: 900;
+}
+
+
+.search_block{
+    width: 50%;
+
+}
+
+
+.filters{
+    display: flex;
+}
+
+
+.filter-btn{
+    position: relative;
+    margin-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-right: 10px;
+    border-radius: 20px;
+    color: black;
+    background: white;
+    border: 1px #9e9e9e solid;
+}
+.filter-btn:hover{
+    background: rgba(0, 0, 0, 0.13);
+}

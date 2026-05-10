@@ -1,0 +1,36 @@
+{%extends "base/base.html" %}
+{% block page %}
+    {% load static %}
+    <main style="min-height: 100vh;" >
+        <div class="block_trainer">
+            <div class="block_all_trainer">
+                <a href="{% url "shop" %}" class="link_return"><p >◀</p> Все товары</a>
+            </div>
+            <div class="block_info_trainer">
+                <div class="block_img_trainer">
+                    <img class="img_trainer" src="{{item.img.url}}" alt="">
+                </div>
+                <div class="block_text_trainer">
+                    <div style="height: 70%">
+                        <h1 style="color: black; text-align: left; font-size: 30px">{{ item.title}}</h1>
+                        <p style="margin-top: 20px; text-align: left;">Описание: {{ item.description}}</p>
+                        <p style="margin-top: 20px; text-align: left;">Цена: {{ item.price}} ₽</p>
+                        <p style="margin-top: 20px; text-align: left;">Количество: {{ item.quantity}} ед.</p>
+                    </div>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div>
+                            <p style="text-align: left">Количество:</p>
+                            <input type="number"  name="quantity" style="width: 100px; text-align: center" value="1" required>
+                        </div>
+                        <div style="display: flex; justify-content: left">
+                            <button type="submit" name="action" value="buy_now" style="border-radius: 20px;border: none; padding: 10px 15px; background: #6ddf01; margin-right: 15px; color: white; text-decoration: none">Купить сейчас</button>
+                            <button type="submit" name="action" value="add_to_cart" style="border-radius: 20px;border: none; padding: 10px 15px; background: #007bff; margin-right: 15px; color: white; text-decoration: none">Добавить в корзину</button>
+                        </div>  
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

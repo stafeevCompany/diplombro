@@ -1,0 +1,22 @@
+{%extends "catallogs/catalogs.html" %}
+{% block catalog %}
+    {% load static %}
+    <main style="min-height: 100vh">
+    <div class="block_news">
+        {% for new in news %}
+            <a href="{% url 'page_new' id=new.id %}" style="text-decoration: none" >
+                <div class="card_news">
+                    <img src="{{new.image.url}}" alt="Картинка новсти">
+                    <div class="blockTextNews">
+                        <h2>{{new.title}}</h2>
+                        <p>{{ new.date}}</p>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="pagination" id="pagination" style="justify-self: center">
+        <!-- Ссылки генерируются JavaScript -->
+    </div>
+    </main>
+{% endblock %}
