@@ -1,22 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "Fitness_club/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-
-        "runtime": "python3.13"
-      }
-    },
-    {
-      "src": "build_files.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "staticfiles"
-      }
-    }
-  ],
   "routes": [
     {
       "src": "/static/(.*)",
