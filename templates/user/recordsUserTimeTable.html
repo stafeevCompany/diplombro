@@ -1,0 +1,124 @@
+{%extends "base/base.html" %}
+    {% block page %}
+        {% load static %}
+    <main style="min-height: 100vh; padding: 10px">
+
+        <h1 style="font-size: 30px; text-align: left; margin-bottom: 20px">Расписание</h1>
+
+    <nav>
+        <button onclick="showSection('today')">На день</button>
+        <button onclick="showSection('tomorrow')">На завтра</button>
+        <button onclick="showSection('week')">На неделю</button>
+    </nav>
+    <hr>
+    <div class="content">
+        <div id="section-today" class="section" >
+          <h2>На сегодня</h2>
+            {% for date, lessons in today_schedule.items %}
+                <div style="justify-content: right; display: flex"><h1>{{ date }}</h1></div>
+                {% for lesson in lessons %}
+                    <div>
+                        <div style="justify-content: left; display: flex">
+                            <h3>{{ lesson.dateTime|date:"H:i" }}</h3>
+                        </div>
+                        <div style="box-shadow: 0 0 5px black; border-radius: 20px; padding: 10px;">
+                                <div style="display: flex">
+                                    <div style="height: 150px; width: 150px; display: flex; justify-content: center; align-content: center">
+                                        <img style="border-radius: 50%;  height: 100%; width: 100%" src="{{ lesson.trainer.image.url }}">
+                                    </div>
+                               <div style="margin-left: 10px">
+                                    <h2 style="text-align: left;">{{ lesson.trainer.last_name }} {{ lesson.trainer.first_name }} {{ lesson.trainer.patronymic }}</h2>
+                                    <p style="text-align: left;">Номер телефона: {{ lesson.trainer.phone }}</p>
+                                    <p style="text-align: left;">Тип тренировки: {{ lesson.typeTraining }}</p> 
+                               </div>  
+                            </div>
+                            
+                            
+                            <div style="display: flex; justify-content: right">
+                                <a class="action-btn delete" href="" >Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <!-- Таблица Категорий -->
+        <div id="section-tomorrow" class="section" style="display:none;">
+            <h2>На завтра</h2>
+        
+            {% for date, lessons in tomorrow_schedule.items %}
+                <div style="justify-content: right; display: flex"><h1>{{ date }}</h1></div>
+                {% for lesson in lessons %}
+                    <div>
+                        <div style="justify-content: left; display: flex">
+                            <h3>{{ lesson.dateTime|date:"H:i" }}</h3>
+                        </div>
+                        <div style="box-shadow: 0 0 5px black; border-radius: 20px; padding: 10px;">
+                                <div style="display: flex">
+                                    <div style="height: 150px; width: 150px; display: flex; justify-content: center; align-content: center">
+                                        <img style="border-radius: 50%;  height: 100%; width: 100%" src="{{ lesson.trainer.image.url }}">
+                                    </div>
+                               <div style="margin-left: 10px">
+                                    <h2 style="text-align: left;">{{ lesson.trainer.last_name }} {{ lesson.trainer.first_name }} {{ lesson.trainer.patronymic }}</h2>
+                                    <p style="text-align: left;">Номер телефона: {{ lesson.trainer.phone }}</p>
+                                    <p style="text-align: left;">Тип тренировки: {{ lesson.typeTraining }}</p> 
+                               </div>  
+                            </div>
+                            
+                            
+                            <div style="display: flex; justify-content: right">
+                                <a class="action-btn edit" href="" >Редактировать</a>
+                                <a class="action-btn delete" href="" >Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    
+        <div id="section-week" class="section" style="display:none;">
+            <h2>На неделю</h2>
+            {% for date, lessons in week_schedule.items %}
+                <div style="justify-content: right; display: flex"><h1>{{ date }}</h1></div>
+                {% for lesson in lessons %}
+                    <div>
+                        <div style="justify-content: left; display: flex">
+                            <h3>{{ lesson.dateTime|date:"H:i" }}</h3>
+                        </div>
+                        <div style="box-shadow: 0 0 5px black; border-radius: 20px; padding: 10px;">
+                                <div style="display: flex">
+                                    <div style="height: 150px; width: 150px; display: flex; justify-content: center; align-content: center">
+                                        <img style="border-radius: 50%; height: 100%; width: 100%" src="{{ lesson.trainer.image.url }}">
+                                    </div>
+                               <div style="margin-left: 10px">
+                                    <h2 style="text-align: left;">{{ lesson.trainer.last_name }} {{ lesson.trainer.first_name }} {{ lesson.trainer.patronymic }}</h2>
+                                    <p style="text-align: left;">Номер телефона: {{ lesson.trainer.phone }}</p>
+                                    <p style="text-align: left;">Тип тренировки: {{ lesson.typeTraining }}</p> 
+                               </div>  
+                            </div>
+                            
+                            
+                            <div style="display: flex; justify-content: right">
+                                <a class="action-btn delete" href="" >Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</main>
+    <script>
+      function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+          section.style.display = 'none';
+        });
+        document.getElementById('section-' + sectionId).style.display = 'block';
+      }
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        showSection('today');
+      });
+      
+    </script>
+{% endblock %}

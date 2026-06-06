@@ -1,0 +1,76 @@
+{%extends "base/base.html" %}
+{% block page %}
+    {% load static %}
+    <style>
+        .form-group {
+            width: 100%; /* чтобы занимать всю ширину контейнера */
+            margin-bottom: 15px; /* отступ между группами */
+        }
+    
+        .form-group label {
+            display: block; /* чтобы label был сверху */
+            margin-bottom: 5px; /* небольшой отступ между label и полем */
+            font-weight: bold; /* чтобы выделить метку */
+        }
+    
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%; /* чтобы поля занимали всю ширину */
+            box-sizing: border-box; /* чтобы padding и border учитывались в ширине */
+        }
+    </style>
+    <main style="min-height: 100vh;" >
+        <div class="login_form_block" >
+            <form class="login_form" method="POST">
+                {% csrf_token %}
+                <h2 style="margin-bottom: 20px">Добавить визит</h2> 
+                <div class="form-group">
+                    {{ form.user.label_tag }}
+                    {{ form.user }}
+                </div>
+                <div class="form-group">
+                    {{ form.image.label_tag }}
+                    {{ form.image }}
+                </div>
+                <div class="form-group">
+                    {{ form.last_name.label_tag }}
+                    {{ form.last_name }}
+                </div>
+                 <div class="form-group">
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name }}
+                </div>
+                 <div class="form-group">
+                    {{ form.patronymic.label_tag }}
+                    {{ form.patronymic }}
+                </div>
+                <div class="form-group">
+                    {{ form.passport_data.label_tag }}
+                    {{ form.passport_data }}
+                </div>
+                <div class="form-group">
+                    {{ form.phone.label_tag }}
+                    {{ form.phone }}
+                </div>
+                <div class="form-group">
+                    {{ form.experience.label_tag }}
+                    {{ form.experience }}
+                </div>
+                <div class="form-group">
+                    {{ form.coach_type.label_tag }}
+                    {{ form.coach_type }}
+                </div>
+                <div class="form-group">
+                    {{ form.price.label_tag }}
+                    {{ form.price }}
+                </div>
+                <div class="form-group">
+                    {{ form.date_of_birth.label_tag }}
+                    {{ form.date_of_birth }}
+                </div>
+                <button class="button_exit" type="submit">Добавить</button>
+            </form>
+        </div>
+    </main>
+{% endblock %}
