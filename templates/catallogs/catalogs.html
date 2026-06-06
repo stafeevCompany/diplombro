@@ -4,6 +4,7 @@
     {% load static %}
     <meta charset="UTF-8">
     <title>Каталог</title>
+        <link rel="icon" href="{% static 'ico/favicon.ico' %}">
         <link href="{% static 'CSS/header.css' %}" rel="stylesheet" >
         <link href="{% static 'CSS/body1.css' %}" rel="stylesheet" >
         <link href="{% static 'CSS/footer.css' %}" rel="stylesheet" >
@@ -15,53 +16,69 @@
         <link href="{% static 'CSS/basket.css' %}" rel="stylesheet" >
 </head>
 <body>
-{% if user.is_active == True %}
+{% if user.isActive == True %}
     <aside>
-        {% if member %}
-                <a href="{% url 'profile_user' %}" class="imgAsideUserLink"><img class="imgAsideUser" src="{{ member.image.url }}" alt=""/></a>
-            {% elif coach %}
-                <a href="" class="imgAsideUserLink"><img class="imgAsideUser" src="{{ coach.image.url }}" alt=""/></a>
-            {% elif user.role.name == "Администратор" %}
-                <a href="" class="imgAsideUserLink"><img class="imgAsideUser" src="{{ admin.image.url }}" alt=""/></a>
-        {% endif %}
         <div class="tabsAside">
-            <a href="{% url 'main_page' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/home_3641392.png" alt=""><p>Главная</p></a>
-            <a href="{% url 'subscriptions' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/icons8-карта-30.png" alt=""><p>Абонементы</p></a>
-            <a href="{% url 'news' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/icons8-новости-48.png" alt=""><p>Новости</p></a>
-            <a href="" class="asideLink"><img class="imgAsideNav" src="../../static/aside/notification_7958802.png" alt=""><p>Уведомления</p></a>
-            <a href="{% url 'trainers' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/icons8-тренер-48.png" alt=""><p>Тренера</p></a>
-            <a href="{% url 'records' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-memo-6377988.png" alt=""><p>Записи</p></a>
-
+            {% if member %}
+                <a href="" class="imgAsideUserLink"><img class="imgAsideUser" src="{{ member.image.url }}" alt=""/></a>
+                <a href="{% url 'profile_user' %}"  class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-home-5525279.png" alt=""><p>Главная</p></a>
+                <a href="{% url 'records' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-workout-6201361.png" alt=""><p>Записи</p></a>
+                <a href="{% url 'news' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-newspaper-5502315.png" alt=""><p>Новости</p></a>
+                <a href="{% url "notification" %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-bell-6824079.png" alt=""><p>Уведомления</p></a>
+                <a href="{% url 'subscriptions' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-subscription-9398940.png" alt=""><p>Абонементы</p></a>
+                <a href="{% url 'trainers' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-coach-17097650.png" alt=""><p>Тренера</p></a>
+                <a href="{% url 'shop' %}" class="asideLink"><img class="imgAsideNav" src="../../static/aside/free-icon-shelves-3854408.png" alt=""><p>Фитнес-товары</p></a>
+            {% endif %}
+            
+            {% if admin %}
+                <a href="" class="imgAsideUserLink"><img class="imgAsideUser" src="{{ admin.image.url }}" alt=""/></a>
+                <a href="{% url 'adminMainPage' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-stats-223407.png" alt=""/><p>Статистика</p></a>
+                <a href="{% url 'WorkTable' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-software-engineer-12534727.png" alt=""/><p>Управление таблицами</p></a>
+                <a href="{% url 'timeTable' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-coach-17097650.png" alt=""/><p>Расписание тренеров</p></a>
+                <a href="{% url 'workSite' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-online-4713146.png" alt=""/><p>Управление сайтом</p></a>
+                <a href="{% url 'paymentsTable' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-money-2969764.png" alt=""/><p>Платежи</p></a>
+                <a href="{% url 'visitsTable' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-weekly-calendar-outline-event-interface-symbol-54332.png" alt=""/><p>История посещений</p></a>
+            {% endif %}
+            {% if trainer %}
+                <a href="" class="imgAsideUserLink"><img class="imgAsideUser" src="{{ trainer.image.url }}" alt=""/></a>
+                <a href="{% url 'mainTrainerPage' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-stats-223407.png" alt=""><p>Статистика</p></a>
+                <a href=" {% url 'recordTrainerTimeTable' %}" class="asideLink"><img class="imgAsideNav" src="../../static/mainAdminPage/free-icon-software-engineer-12534727.png" alt=""><p>Расписание</p></a>
+            {% endif %}
         </div>
-            <a class="logoutUserLink"  href="{% url "logout" %}"><img class="imgAsideNav" src="../../static/aside/icons8-выход-30.png" alt=""><p>Выход</p></a>
+            <a class="logoutUserLink"  href="{% url "logout" %}"><img class="imgAsideNav" src="../../static/aside/free-icon-exit-1286969%20(1).png" alt=""><p>Выход</p></a>
     </aside>
 {% endif %}
-<div style=" {% if user.is_active == True %}width: 95%;{% else %}width: 100%;{% endif %}   position: relative; justify-self: right;">
-
-    {% if user.is_active == False%}
-        <header>
-        
+<div style=" {% if user.isActive == True %}width: 94%;{% else %}width: 100%;{% endif %}   position: relative; justify-self: right;">
+     <header>
+        <div class="icon">
+            <a href="{% url 'main_page' %}" style="text-decoration: none"><h1 style="text-align: left; font-size: 30px"><span style="color: #007bff">Gym</span> Center</h1></a>
+        </div>
             <div class="header_menu">
-                <a class="navigation_header" href="#main">Главная</a>
-                <a class="navigation_header" href="#getTag">Что ты получишь</a>
-                <a class="navigation_header" href="#place">Пространство</a>
-                <a class="navigation_header" href="#subscriptions">Абонементы</a>
-                <a class="navigation_header" href="#news">Новости</a>
-                <a class="navigation_header" href="#trainers" >Тренера</a>
+                {% if user.isActive == True  %}
+                    {% else %}
+                    <a class="navigation_header" href="{% url 'main_page' %}"><p class="navigation_headerText">Главная</p></a>
+                    <a class="navigation_header" href="{% url 'subscriptions' %}"><p class="navigation_headerText">Абонементы</p></a>
+                    <a class="navigation_header" href="{% url 'news' %}"><p class="navigation_headerText">Новости</p></a>
+                    <a class="navigation_header" href="{% url 'trainers' %}" ><p class="navigation_headerText">Тренера</p></a>
+                    <a class="navigation_header" href="{% url 'shop' %}" ><p class="navigation_headerText">Фитнес товары</p></a>
+                {% endif %}
             </div>
             <div class="login_user">
                 <div style="justify-content: right; margin-right: 20px;">
-                    <a class="login_button" href="{% url "login" %}">Войти</a>
-                    <a class="registr_button" href="{% url "registration" %}">Зарегистрироваться</a>
+                    {% if user.isActive == True  %}
+                    {% else %}
+                        
+                        <a class="login_button" href="{% url "login" %}">Войти</a>
+                        <a class="registr_button" href="{% url "registration" %}">Зарегистрироваться</a>
+                    {% endif %}
                 </div>
             </div>
         </header>
-   {% endif %}
     <div style="display: flex">
         <div style="display: flex; flex: 50%">
             <h1 style="color: black; font-size: 50px">{% if subscriptions %}Абонементы{% elif trainers %}Тренера{% elif news %}Новости{% elif items %}Товары{% elif basketItems %}Корзина{% endif %}</h1>
         </div>
-        {% if items %}
+        {% if items and user.isActive == True %}
             <div style="display: flex; justify-content: right; align-items: center; flex: 50%">
                 <a href="{% url 'basket' %}" style="border-radius: 20px; background: #007bff; margin-right: 10px; padding: 10px 15px; display: flex; text-decoration: none; justify-content: center; align-items: center"><img src="../../static/shop/free-icon-shopping-cart-711897.png" alt="" style="width: 30px; height: 30px; margin-right: 10px"><p style="color: white; text-align: left; font-size: 20px">Корзина</p></a>
             </div>
@@ -150,7 +167,7 @@ function setActiveFilter(button) {
 
  document.addEventListener('DOMContentLoaded', function() {
             const productsPerPage = 18;
-            const allProducts = document.querySelectorAll({% if subscriptions %}'.card_subscription'{% elif trainers %}'.card_trainer'{% elif news %}'.card_news'{% elif items %}'card_item'{% endif %});
+            const allProducts = document.querySelectorAll({% if subscriptions %}'.card_subscription'{% elif trainers %}'.card_trainer'{% elif news %}'.card_news'{% elif items %}'.card_item'{% endif %});
             const totalProducts = allProducts.length;
             const totalPages = Math.ceil(totalProducts / productsPerPage);
             const paginationContainer = document.getElementById('pagination');

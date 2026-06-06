@@ -1,39 +1,77 @@
 {%extends "base/base.html" %}
 {% block page %}
+    <style>
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            padding: 20px;
+            max-width: 600px;
+            width: 90%;
+            border-radius: 8px;
+        }
+        
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+</style>
     {% load static %}
-    <main class="profile_fon">
+    <main class="profile_fon" style="padding: 10px">
         <div class="data_block">
             <div class="block_private_data">
                 <div class="block_info_user">
                     <img src="{{member.image.url}}" alt="">
                     <div class="private_data">
-                       <h1 style="font-size: 30px; text-align: left">{{member.last_name}} {{member.first_name}} {{member.patronymic}}</h1>
-                        <p style="font-size: 20px; text-align: left">Дата рождения: {{member.date_of_birth}}</p>
+                       <h1 style="font-size: 30px; text-align: left">{{member.lastName}} {{member.firstName}} {{member.patronymic}}</h1>
+                        <p style="font-size: 20px; text-align: left">Дата рождения: {{member.dateOfBirth}}</p>
                         <p style="font-size: 20px; text-align: left">Номер телефона: {{user.phone}}</p>
+                        <p style="font-size: 20px; text-align: left">Почта: {{member.email}}</p>
                     </div>
                 </div>
                 <hr style="color: white; width: 100%">
                 <div class="block_button_edit">
                     <a href="{% url 'editProfile' %}">Изменить данные</a>
                 </div>
+
             </div>
             
+
             
             
             
         </div>
         <div style="display: flex;justify-content: center; width: 100% " >
-            <div class="card" style="margin-right: 20px">
+            <div class="card" style="margin-right: 20px; background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%); overflow: hidden;">
                 <div style="width: 100%">
-                        <h1 style="text-align: left; font-size: 30px"><span style="color: #007bff">Gym</span> Center</h1>
+                        <h1 style="text-align: left; font-size: 30px; color: white"><span style="color: #007bff">Gym</span> Center</h1>
                 </div>
                 <div style="display: flex; height: 310px;">
-                   <div class="qr_code">
-                        <img src="{{card.qr_code.url}}" alt="">
-                   </div>
+                   <div class="qr_code" style="flex: 1; display: flex; justify-content: center; align-items: center;">
+                        <button id="qrButton" style="border: none; background: transparent; cursor: pointer; padding: 0; transition: transform 0.3s;">
+                            <img src="{{card.qrCode.url}}" alt="QR Code" style="width: 120px; height: 120px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: transform 0.3s;">
+                        </button>
+                    </div>
                     <div class="nubmer">
                         <div>
-                          <h3 style="color: black">{{card.code}}</h3>
+                          <h3 style="margin: 0; font-size: 34px; color: #fff;">{{card.code}}</h3>
                         </div>
                     </div>
                 </div>
@@ -42,7 +80,7 @@
             <div class="visit_block" style="margin-right: 20px">
                 <h1 style="text-align: center; font-size: 30px">Посещения</h1>
                 <div class="progress-bar" style="display: flex; justify-content: center; align-items: center; height: 80%">
-                    {% if activeSubscription.is_active == True %}
+                    {% if activeSubscription.isActive == True %}
                         <h1 style="color: black; font-size: 30px">{{ remainingVisits }}/{{ maxVisits }} дней</h1>
                     {% else %}
                         <h1 style="color: gray; font-size: 30px">Оформите абонемент +</h1>
@@ -51,9 +89,9 @@
             </div>
             <div class="notification_block" >
                 <h1 style="text-align: center; font-size: 30px">Действующий абонемент</h1>
-                <div class="" style="display: flex; justify-content: center; align-items: center; height: 80%" >
-                    {% if activeSubscription.is_active == True %}
-                        <h1 style="color: black; font-size: 30px">{{ activeSubscription.subscription.title }}</h1>
+                <div class="" style="display: flex; justify-content: center; align-items: center; height: 65%" >
+                    {% if activeSubscription.isActive == True %}
+                        <button id="activeSubscriptionButton" style="color: black; font-size: 30px; background: white; border-radius: 20px; border: none">{{ activeSubscription.buySubscription.subscription.title }}</button>
                         {% else %}
                         <h1 style="color: gray; font-size: 30px">Оформите абонемент +</h1>
                     {% endif %}
@@ -62,57 +100,179 @@
         </div>
         <div class="block_history_buy">
             <div class="history_buy">
-             <h1 style="font-size: 30px" >История покупок</h1>
+             <h1 style="font-size: 30px" >История абонементов</h1>
                 {% for buySubscription in  buySubscriptions %}
-                <div class="cardHistory" {% if buySubscription.is_active == False %}style="background: #6a6a6a"{% endif %}>
-                    <p>{{ buySubscription.subscription }}</p>
-                    <p>{{ buySubscription.start_date }} - {{ buySubscription.end_date }}</p>
-                </div>
-                    
+                    <div class="cardHistory" {% if buySubscription.is_active == False %}style="background: #6a6a6a"{% endif %}>
+                        <div style="flex: 50%"><h5 style="font-size: 20px;text-align: left">{{ buySubscription.buySubscription.subscription.title }}</h5></div>
+                        <div style="flex: 50%"><p style="text-align: right">{{ buySubscription.startDate }} - {{ buySubscription.endDate }}</p></div>
+                    </div>
                 {% endfor %}
             </div>
         </div>
-    
-    
-    
-    
-<div id="balanceModal" class="modal" style="display:none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5);">
-    <div class="modal-content" style="background-color: #fff; margin: 10% auto; padding: 20px; border-radius: 10px; width: 400px; max-width: 90%;">
-        <h1 style="text-align:center;">Пополнение баланса</h1>
-        <div class="addMoney_form_block">
-            <form class="addMoney_form" method="POST" >
-                {% csrf_token %}
-                <label for="">Номер карты</label>
-                <input class="numberCard" type="text" name="numberCard" placeholder="Номер карты" required/>
 
-                <label for="">Дата окончания</label>
-                <input class="dateCard" type="date" name="dateCard" placeholder="Дата" required/>
+        <div class="block_history_buy" >
+            <div class="history_buy" style="background: #fafafa; overflow-y: hidden; height:520px;">
+            <h1 style="font-size: 30px" >История покупок</h1>
+                 <div class="sliderTrainer">
+                    <div class="slidesTrainers">
+                        {% for buyItemShop in buyItemShop %}
+                             <a href="{% url 'pageItem' id=buyItemShop.item.id %}" style="text-decoration: none">
+                                 <div class="card_item" style="box-shadow: 0 0 5px black">
+                                     <img src="{{buyItemShop.item.img.url}}" alt="Картинка новсти">
+                                    <div class="blockTextItem">
+                                        <p class="price_item">{{ buyItemShop.item.price }} ₽</p>
+                                        <p style="font-size: 20px; white-space: nowrap; /* Запретить перенос строки */
+                  overflow: hidden; /* Обрезать текст за границами блока */
+                  text-overflow: ellipsis;">{{buyItemShop.item.title}}</p>
+                                        <p style="white-space: nowrap; /* Запретить перенос строки */
+                  overflow: hidden; /* Обрезать текст за границами блока */
+                  text-overflow: ellipsis;">{{buyItemShop.item.description }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                       {% endfor %}
+                    </div>
 
-                <label for="">Код</label>
-                <input class="codeCard" type="text" name="codeCard" placeholder="Код" required/>
+                        <button class="prevTrainer" onclick="prevSlideTrainer()">◀</button>
+                        <button class="nextTrainer" onclick="nextSlideTrainer()">▶</button>
+                </div>
 
-                <label for="">Сумма</label>
-                <input class="countMoney" type="number" name="countMoney" placeholder="Сумма" required/>
+            </div>
+<!-- Модальное окно -->
+<div id="qrModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <img src="{{card.qrCode.url}}" alt="" style="width: 100%; height: auto;">
+        
+    </div>
+</div>
 
-                <button class="button_addMoney" type="submit">Добавить</button>
-                <button type="button" id="closeModal" style="margin-top:10px;">Закрыть</button>
-            </form>
+<div id="activeSubscriptionModal" class="modal" style="display: none;">
+    <div class="modal-content" style="width: 360px;">
+        <span class="close" id="activeSubscriptionCloseModal">&times;</span>
+        <div class="card_subscription">
+            <div class="text_subscription">
+               <h2 class="title_subscription">{{ activeSubscription.buySubscription.subscription.title }}</h2>
+               <ul>
+                   {% for feature in activeSubscription.buySubscription.subscription.features.all %}
+                        <li class="list_subscription">✓ <span>{{ feature.name }}</span></li>
+                   {% endfor %}
+               </ul>
+            </div>
+            <p class="price_subscription">{{ activeSubscription.buySubscription.subscription.price }} ₽/мес</p>
+        </div>
+    </div>
+
+<div id="activeSubscriptionModal" class="modal" style="display: none;">
+    <div class="modal-content" style="width: 360px;">
+        <span class="close" id="activeSubscriptionCloseModal">&times;</span>
+        <div class="card_subscription">
+            <div class="text_subscription">
+               <h2 class="title_subscription">{{ activeSubscription.buySubscription.subscription.title }}</h2>
+               <ul>
+                   {% for feature in activeSubscription.buySubscription.subscription.features.all %}
+                        <li class="list_subscription">✓ <span>{{ feature.name }}</span></li>
+                   {% endfor %}
+               </ul>
+            </div>
+            <p class="price_subscription">{{ activeSubscription.buySubscription.subscription.price }} ₽/мес</p>
         </div>
     </div>
 </div>
-<script>
-    document.getElementById('openModalBtn').onclick = function() {
-        document.getElementById('balanceModal').style.display = 'block';
-    };
-    document.getElementById('closeModal').onclick = function() {
-        document.getElementById('balanceModal').style.display = 'none';
-    };
-    // Закрытие при клике вне окна
-    window.onclick = function(event) {
-        if (event.target == document.getElementById('balanceModal')) {
-            document.getElementById('balanceModal').style.display = 'none';
-        }
-    };
-</script>
+
+        
     </main>
+
+
+
+<!-- JavaScript для открытия и закрытия модального окна -->
+<script>
+const modal = document.getElementById('qrModal');
+const btn = document.getElementById('qrButton');
+const span = document.getElementById('closeModal');
+
+btn.onclick = function() {
+    modal.style.display = 'flex';
+}
+span.onclick = function() {
+    modal.style.display = 'none';
+}
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+
+const modal1 = document.getElementById('activeSubscriptionModal');
+const btn1 = document.getElementById('activeSubscriptionButton');
+const span1 = document.getElementById('activeSubscriptionCloseModal');
+
+btn1.onclick = function() {
+    modal1.style.display = 'flex';
+}
+span1.onclick = function() {
+    modal1.style.display = 'none';
+}
+window.onclick = function(event) {
+    if (event.target == modal1) {
+        modal1.style.display = 'none';
+    }
+}
+
+
+//slider trainers
+let currentSlideTrainer = 0;
+function showSlideTrainer(index) {
+ const slidesTrainer = document.querySelectorAll('.card_trainer');
+ if (index >= slidesTrainer.length) {
+ currentSlideTrainer = 0;
+ } else if (index < 0) {
+ currentSlideTrainer = slidesTrainer.length - 1;
+ } else {
+ currentSlideTrainer = index;
+ }
+ const offsetTrainer = -currentSlideTrainer * 405;
+ document.querySelector('.slidesTrainers').style.transform = `translateX(${offsetTrainer}px)`;
+}
+
+function nextSlideTrainer() {
+ showSlideTrainer(currentSlideTrainer + 1);
+}
+
+function prevSlideTrainer() {
+ showSlideTrainer(currentSlideTrainer - 1);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+ showSlideTrainer(currentSlideTrainer);
+});
+
+
+//slider subscriptions
+let currentSlideSubscription = 0;
+function showSlideSubscription(index) {
+ const slidesSubscription = document.querySelectorAll('.card_news');
+ if (index >= slidesSubscription.length) {
+ currentSlideSubscription = 0;
+ } else if (index < 0) {
+ currentSlideSubscription = slidesSubscription.length - 1;
+ } else {
+ currentSlideSubscription = index;
+ }
+ const offsetSubscription = -currentSlideSubscription * 240;
+ document.querySelector('.slidesSubscriptions').style.transform = `translateX(${offsetSubscription}px)`;
+}
+
+function nextSlideSubscription() {
+ showSlideSubscription(currentSlideSubscription + 1);
+}
+
+function prevSlideSubscription() {
+ showSlideSubscription(currentSlideSubscription - 1);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+ showSlideSubscription(currentSlideSubscription);
+});
+</script>
 {% endblock %}

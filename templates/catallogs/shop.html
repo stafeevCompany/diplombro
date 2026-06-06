@@ -3,15 +3,19 @@
     {% load static %}
     <main style=" min-height: 100vh;" >
     
-    <div class="block_shop">
+    <div style="display: flex;padding: 5px;flex-wrap: wrap;justify-content: center;width: 100%;">
         {% for item in items %}
             <a href="{% url 'pageItem' id=item.id %}" style="text-decoration: none">
                 <div class="card_item" data-category="{{ item.category.title }}">
                      <img src="{{item.img.url}}" alt="Картинка новсти">
                     <div class="blockTextItem">
                         <p class="price_item">{{ item.price }} ₽</p>
-                        <p style="font-size: 20px">{{item.title}}</p>
-                        <p>{{ item.description }}</p>
+                        <p style="font-size: 20px; white-space: nowrap; /* Запретить перенос строки */
+  overflow: hidden; /* Обрезать текст за границами блока */
+  text-overflow: ellipsis;">{{item.title}}</p>
+                        <p style="white-space: nowrap; /* Запретить перенос строки */
+  overflow: hidden; /* Обрезать текст за границами блока */
+  text-overflow: ellipsis;">{{ item.description }}</p>
                     </div>
                 </div>
             </a>

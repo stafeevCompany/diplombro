@@ -7,7 +7,15 @@
         <button onclick="showSection('members')">Клиенты</button>
         <button onclick="showSection('trainers')">Тренера</button>
         <button onclick="showSection('subscriptions')">Абонементы</button>
+        <button onclick="showSection('featers')">Возможности абонементы</button>
         <button onclick="showSection('news')">Новости</button>
+        
+        <button onclick="showSection('users')">Пользователи</button>
+        <button onclick="showSection('directions')">Направления тренеров</button>
+        <button onclick="showSection('educations')">Образование тренеров</button>
+        <button onclick="showSection('shopItems')">Товары</button>
+        <button onclick="showSection('shopCategoryItems')">Категории товаров</button>
+        <button onclick="showSection('persCard')">Персональные карты</button>
     </nav>
     <hr>
     <div class="content">
@@ -17,7 +25,7 @@
                     <input id="search-members" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
                 </div>
                <div class="block_add">
-                    <a href="" class="addDate">Добавить</a>
+                    <a href="{% url 'member_create' %}" class="addDate">Добавить</a>
                 </div> 
             </div>
             
@@ -30,7 +38,6 @@
                             <th>Дата рождения</th>
                             <th>Номер телефона</th>
                             <th>Паспортные данные</th>
-                            <th>Баланс</th>
                             <th>Пароль</th>
                             <th>Персональная карта</th>
                             <th>Действия</th>
@@ -40,16 +47,15 @@
                     {% for item in members %}
                         <tr class="rowData">
                             <td class="tdData"><img src="{{ item.member.image.url }}"></td>
-                            <td class="tdData">{{ item.member.first_name }} {{ item.member.last_name }} {{ item.member.patronymic }}</td>
-                            <td class="tdData">{{ item.member.date_of_birth }}</td>
+                            <td class="tdData">{{ item.member.firstName }} {{ item.member.lastName }} {{ item.member.patronymic }}</td>
+                            <td class="tdData">{{ item.member.dateOfBirth }}</td>
                             <td class="tdData">{{ item.member.user.phone }}</td>
-                            <td class="tdData">{{ item.member.passport_data }}</td>
-                            <td class="tdData">{{ item.member.balance }}</td>
+                            <td class="tdData">{{ item.member.passportData }}</td>
                             <td class="tdData">{{ item.member.user.password }}</td>
-                            <td class="tdData">{{ item.personal_card.code }}</td>
+                            <td class="tdData">{{ item.personalCard.code }}</td>
                             <td class="tdData">
-                                <a class="action-btn edit" href="">Редактировать</a>
-                                <a class="action-btn delete" href="">Удалить</a>
+                                <a class="action-btn edit" href="{% url 'member_update' id=item.member.id %}">Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'member_delete' id=item.member.id %}">Удалить</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -65,7 +71,7 @@
                     <input id="search-trainers" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
                 </div>
                <div class="block_add">
-                    <a href="" class="addDate">Добавить</a>
+                    <a href="{% url 'coach_create' %}" class="addDate">Добавить</a>
                 </div> 
             </div>
             <div style="height: 800px;overflow-y: scroll;">
@@ -89,10 +95,10 @@
                         {% for trainer in trainer_item.trainers %}
                         <tr class="rowData">
                             <td class="tdData"><img src="{{ trainer.trainer.image.url }}"></td>
-                            <td class="tdData">{{ trainer.trainer.first_name }} {{ trainer.trainer.last_name }} {{ trainer.trainer.patronymic }}</td>
-                            <td class="tdData">{{ trainer.trainer.date_of_birth }}</td>
+                            <td class="tdData">{{ trainer.trainer.firstName }} {{ trainer.trainer.lastName }} {{ trainer.trainer.patronymic }}</td>
+                            <td class="tdData">{{ trainer.trainer.dateOfBirth }}</td>
                             <td class="tdData">{{ trainer.trainer.phone }}</td>
-                            <td class="tdData">{{ trainer.trainer.passport_data }}</td>
+                            <td class="tdData">{{ trainer.trainer.passportData }}</td>
                             <td class="tdData">{{ trainer.trainer.experience }}</td>
                             <td class="tdData">
                                 {% for education in trainer.educations.all %}
@@ -106,8 +112,8 @@
                             </td>
                             <td class="tdData">{{ trainer.trainer.user.password }}</td>
                             <td class="tdData">
-                                <a class="action-btn edit" href="">Редактировать</a>
-                                <a class="action-btn delete" href="">Удалить</a>
+                                <a class="action-btn edit" href="{% url 'coach_update' id=trainer.trainer.id %}">Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'coach_delete' id=trainer.trainer.id %}">Удалить</a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -123,7 +129,7 @@
                     <input id="search-subscriptions" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
                 </div>
                <div class="block_add">
-                    <a href="" class="addDate">Добавить</a>
+                    <a href="{% url 'subscription_create' %}" class="addDate">Добавить</a>
                 </div> 
             </div>
             <div style="height: 800px;overflow-y: scroll;">
@@ -152,8 +158,8 @@
                             <td class="tdData">{{ subscription.duration_days }}</td>
                             <td class="tdData">{{ subscription.price }}</td>
                             <td class="tdData">
-                                <a class="action-btn edit" href="">Редактировать</a>
-                                <a class="action-btn delete" href="">Удалить</a>
+                                <a class="action-btn edit" href="{% url 'subscription_update' id=subscription.id %}">Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'subscription_delete' id=subscription.id %}">Удалить</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -167,7 +173,7 @@
                     <input id="search-news" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
                 </div>
                <div class="block_add">
-                    <a href="" class="addDate">Добавить</a>
+                    <a href="{% url 'add_news' %}" class="addDate">Добавить</a>
                 </div> 
             </div>
             <div style="height: 800px;overflow-y: scroll;">
@@ -189,8 +195,256 @@
                             <td class="tdData">{{ news.content }}</td>
                             <td class="tdData">{{ news.date }}</td>
                             <td class="tdData">
-                                <a class="action-btn edit" href="" >Редактировать</a>
-                                <a class="action-btn delete" href="" >Удалить</a>
+                                <a class="action-btn edit" href="{% url 'edit_news' id=news.id %}" >Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'delete_news' id=news.id%}" >Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            <div id="section-featers" class="section" style="display:none;">
+            <div style="width: 100%; display: flex">
+                <div style="width: 100%; ">
+                    <input id="search-featers" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                </div>
+               <div class="block_add">
+                    <a href="{% url 'subscriptionFeature_create' %}" class="addDate">Добавить</a>
+                </div> 
+            </div>
+            <div style="height: 800px;overflow-y: scroll;">
+                <table>
+                    <thead class="headerTable">
+                        <tr class="rowData">
+                            <th>Абонемент</th>
+                            <th>Название</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-featers">
+                    {% for featers in featers %}
+                        <tr class="rowData">
+                            <td class="tdData">{{ featers.subscription.title }}</td>
+                            <td class="tdData">{{ featers.name }}</td>
+                            <td class="tdData">
+                                <a class="action-btn edit" href="{% url 'subscriptionFeature_update' id=featers.id %}" >Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'subscriptionFeature_delete' id=featers.id%}" >Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="section-users" class="section" style="display:none;">
+            <div style="width: 100%; display: flex">
+                <div style="width: 100%; ">
+                    <input id="search-users" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                </div>
+               <div class="block_add">
+                    <a href="{% url 'user_create' %}" class="addDate">Добавить</a>
+                </div> 
+            </div>
+            <div style="height: 800px;overflow-y: scroll;">
+                <table>
+                    <thead class="headerTable">
+                        <tr class="rowData">
+                            <th>Роль</th>
+                            <th>Логин</th>
+                            <th>Пароль</th>
+                            <th>В системе</th>
+                            <th>Дата входа</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-users">
+                    {% for users in users %}
+                        <tr class="rowData">
+                            <td class="tdData">{{ users.role.name }}</td>
+                            <td class="tdData">{{ users.phone }}</td>
+                            <td class="tdData">{{ users.password }}</td>
+                            <td class="tdData">{{ users.isActive }}</td>
+                            <td class="tdData">{{ users.dateJoined }}</td>
+                            <td class="tdData">
+                                <a class="action-btn edit" href="{% url 'user_update' id=users.id %}" >Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'user_delete' id=users.id%}" >Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <div id="section-directions" class="section" style="display:none;">
+            <div style="width: 100%; display: flex">
+                <div style="width: 100%; ">
+                    <input id="search-directions" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                </div>
+               <div class="block_add">
+                    <a href="{% url 'direction_create' %}" class="addDate">Добавить</a>
+                </div> 
+            </div>
+            <div style="height: 800px;overflow-y: scroll;">
+                <table>
+                    <thead class="headerTable">
+                        <tr class="rowData">
+                            <th>Тренер</th>
+                            <th>Название</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-directions">
+                    {% for directionTrainers in directionTrainers %}
+                        <tr class="rowData">
+                            <td class="tdData">{{ directionTrainers.trainer.firstName }} {{ directionTrainers.trainer.lastName }} {{ directionTrainers.trainer.patronymic }}</td>
+                            <td class="tdData">{{ directionTrainers.name }}</td>
+                            <td class="tdData">
+                                <a class="action-btn edit" href="{% url 'direction_update' id=directionTrainers.id %}" >Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'direction_delete' id=directionTrainers.id%}" >Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <div id="section-educations" class="section" style="display:none;">
+            <div style="width: 100%; display: flex">
+                <div style="width: 100%; ">
+                    <input id="search-educations" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                </div>
+               <div class="block_add">
+                    <a href="{% url 'education_create' %}" class="addDate">Добавить</a>
+                </div> 
+            </div>
+            <div style="height: 800px;overflow-y: scroll;">
+                <table>
+                    <thead class="headerTable">
+                        <tr class="rowData">
+                            <th>Тренер</th>
+                            <th>Название</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-educations">
+                    {% for educationTrainers in educationTrainers %}
+                        <tr class="rowData">
+                            <td class="tdData">{{ educationTrainers.trainer.firstName }} {{ directionTrainers.trainer.lastName }} {{ directionTrainers.trainer.patronymic }}</td>
+                            <td class="tdData">{{ educationTrainers.name }}</td>
+                            <td class="tdData">
+                                <a class="action-btn edit" href="{% url 'education_update' id=educationTrainers.id %}" >Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'education_delete' id=educationTrainers.id%}" >Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    <div id="section-shopItems" class="section" style="display:none;">
+            <div style="width: 100%; display: flex">
+                <div style="width: 100%; ">
+                    <input id="search-shopItems" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                </div>
+               <div class="block_add">
+                    <a href="{% url 'shopItem_create' %}" class="addDate">Добавить</a>
+                </div> 
+            </div>
+            <div style="height: 800px;overflow-y: scroll;">
+                <table>
+                    <thead class="headerTable">
+                        <tr class="rowData">
+                            <th>Изображение</th>
+                            <th>Название</th>
+                            <th>Описание</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                            <th>Категория</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-shopItems">
+                    {% for shopItems in shopItems %}
+                        <tr class="rowData">
+                            <td class="tdData"><img src="{{ shopItems.img.url }}"></td>
+                            <td class="tdData">{{ shopItems.title }}</td>
+                            <td class="tdData">{{ shopItems.description }}</td>
+                            <td class="tdData">{{ shopItems.price }}</td>
+                            <td class="tdData">{{ shopItems.quantity }}</td>
+                            <td class="tdData">{{ shopItems.category.title }}</td>
+                            <td class="tdData">
+                                <a class="action-btn edit" href="{% url 'shopItem_update' id=shopItems.id %}" >Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'shopItem_delete' id=shopItems.id%}" >Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+        <div id="section-shopCategoryItems" class="section" style="display:none;">
+            <div style="width: 100%; display: flex">
+                <div style="width: 100%; ">
+                    <input id="search-shopCategoryItems" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                </div>
+               <div class="block_add">
+                    <a href="{% url 'shopCategory_create' %}" class="addDate">Добавить</a>
+                </div> 
+            </div>
+            <div style="height: 800px;overflow-y: scroll;">
+                <table>
+                    <thead class="headerTable">
+                        <tr class="rowData">
+                            <th>Название</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-shopCategoryItems">
+                    {% for shopCategoryItems in shopCategoryItems %}
+                        <tr class="rowData">
+                            <td class="tdData">{{ shopCategoryItems.title }}</td>
+                            <td class="tdData">
+                                <a class="action-btn edit" href="{% url 'shopCategory_update' id=shopCategoryItems.id %}" >Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'shopCategory_delete' id=shopCategoryItems.id%}" >Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+    <div id="section-persCard" class="section" style="display:none;">
+            <div style="width: 100%; display: flex">
+                <div style="width: 100%; ">
+                    <input id="search-persCard" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                </div>
+               <div class="block_add">
+                    <a href="{% url 'personalCard_create' %}" class="addDate">Добавить</a>
+                </div> 
+            </div>
+            <div style="height: 800px;overflow-y: scroll;">
+                <table>
+                    <thead class="headerTable">
+                        <tr class="rowData">
+                            <th>QR</th>
+                            <th>Код</th>
+                            <th>Клиент</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-persCard">
+                    {% for persCard in persCard %}
+                        <tr class="rowData">
+                            <td class="tdData"><img src="{{ persCard.qrCode.url }}"></td>
+                            <td class="tdData">{{ persCard.code }}</td>
+                            <td class="tdData">{{ persCard.member.lastName }} {{ persCard.member.firstName }} {{ persCard.member.patronymic }}</td>
+                            <td class="tdData">
+                                <a class="action-btn edit" href="{% url 'personalCard_update' id=persCard.id %}" >Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'personalCard_delete' id=persCard.id%}" >Удалить</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -239,6 +493,14 @@
   setupSearch('search-trainers', 'tbody-trainers');
   setupSearch('search-subscriptions', 'tbody-subscriptions');
   setupSearch('search-news', 'tbody-news');
+  
+  setupSearch('search-featers', 'tbody-featers');
+  setupSearch('search-users', 'tbody-users');
+  setupSearch('search-directions', 'tbody-directions');
+  setupSearch('search-educations', 'tbody-educations');
+  setupSearch('search-shopItems', 'tbody-shopItems');
+  setupSearch('search-shopCategoryItems', 'tbody-shopCategoryItems');
+  setupSearch('search-persCard', 'tbody-persCard');
 });
     </script>
 

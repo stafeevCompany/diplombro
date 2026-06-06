@@ -6,9 +6,9 @@
       <form id="payment-form" class="formPay">
           <div >
               <h1 style="margin-bottom: 30px; font-size: 30px">Оплата абонемента</h1>
-              <div style="display: flex; box-shadow: 0 0 2px black; border-radius: 10px; padding: 5px">
-                  <div style="flex: 50%"><p style="text-align: left">Название: {{ subscription.title }}</p></div>
-                  <div style="flex: 50%; display: flex; flex-direction: column;justify-content: flex-end;"><p style="text-align: right">Количество дней: {{ subscription.duration_days }}</p></div>
+              <div style=" box-shadow: 0 0 2px black; border-radius: 10px; padding: 5px">
+                  <div style="flex: 50%"><p style="text-align: left">{{ subscription.title }}</p></div>
+                  <div style="flex: 50%; display: flex; flex-direction: column;justify-content: flex-end;"><p style="text-align: right">Количество дней: {{ subscription.durationDays }}</p></div>
               </div>
               <div class="inputPay" id="card-element"><!-- Stripe Card Element --></div>
                <div><p  style="text-align: right">Цена: {{ subscription.price }} ₽</p></div>

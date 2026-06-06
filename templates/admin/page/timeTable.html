@@ -11,7 +11,7 @@
                         <input id="search-trainers" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
                     </div>
                    <div class="block_add">
-                        <a href="" class="addDate">Добавить</a>
+                        <a href="{% url 'add_record' %}" class="addDate">Добавить</a>
                    </div> 
              </div>
             <div style="height: 800px;overflow-y: scroll;">
@@ -31,16 +31,16 @@
                     <tbody id="tbody-trainers">
                     {% for timeTable in timeTable %}
                         <tr class="rowData">
-                            <td  class="tdData"> {{ timeTable.trainer.last_name }} {{ timeTable.trainer.first_name }} {{ timeTable.trainer.patronymic }}</td>
+                            <td  class="tdData"> {{ timeTable.trainer.lastName }} {{ timeTable.trainer.firstName }} {{ timeTable.trainer.patronymic }}</td>
                             <td  class="tdData">{{ timeTable.trainer.phone }}</td>
-                            <td class="tdData">{{ timeTable.member.last_name }} {{ timeTable.member.first_name }} {{ timeTable.member.patronymic }}</td>
+                            <td class="tdData">{{ timeTable.member.lastName }} {{ timeTable.member.firstName }} {{ timeTable.member.patronymic }}</td>
                             <td class="tdData">{{ timeTable.member.phone }}</td>
                             <td class="tdData">{{ timeTable.typeTraining }}</td>
                             <td class="tdData">{{ timeTable.trainer.price }}</td>
                             <td class="tdData">{{ timeTable.dateTime }}</td>
                             <td class="tdData">
-                                <a class="action-btn edit" href="" >Редактировать</a>
-                                <a class="action-btn delete" href="" >Удалить</a>
+                                <a class="action-btn edit" href="{% url 'edit_timetable_coach' id=timeTable.id %}" >Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'delete_timetable_coach' id=timeTable.id %}" >Удалить</a>
                             </td>
                         </tr>
                     {% endfor %}

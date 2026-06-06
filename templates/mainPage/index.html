@@ -5,9 +5,9 @@
         <div class="block_preview" id="main">
             <div class="main_block">
                 <div class="text_block">
-                    <div>
-                        <h1 id="mainTitle">Твой путь к совершенству начинается здесь</h1>
-                        <p id="mainDescription">Мы стремимся, чтобы каждый гость ощущал не только поддержку, но и стабильный прогресс, помогая достигать поставленных целей легко и эффективно.</p>
+                    <div style="margin-bottom: 30px">
+                        <h1  style="text-align: left; margin-bottom: 20px" id="mainTitle">Превратим ваше желание в результат</h1>
+                        <p style="text-align: left" id="mainDescription">Наша цель — создать комфортные условия для вашего пути к здоровью, силе и уверенности в себе. Современный тренажёрный зал, групповые программы, персональные тренировки и профессиональная команда — всё, чтобы каждый посетитель чувствовал поддержку и прогресс. ⠀</p>
                     </div>
                     <div class="tags_block">
                             <div>
@@ -32,7 +32,7 @@
                     <a class="button_start" href="{% url "profile_user" %}">Начать заниматься</a>
                 </div>
                 <div class="img_block">
-                    <img id="mainImage" src="{% static "/mainPage/7495199a7457ea1882ba59614e6371da.jpg" %}" alt="превью">
+                    <img id="mainImage" src="{% static "/mainPage/beautiful-girl-is-engaged-gym.jpg" %}" alt="превью">
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@
                     <a href="{% url 'shop' %}" style="display: flex; justify-content: center; justify-self: center; border-radius: 20px; width: 100%; text-decoration: none; color: white; background: #007bff; padding: 10px 15px">Перейти к товару</a>
                 </div>
            </div>
-            <div style="flex: 50%; display: flex; align-items: center; justify-content: center; height: 100%">
+            <div style="flex: 40%; display: flex; align-items: center; justify-content: center; height: 100%">
                <img style="width: 500px; height: 300px" src="../../static/shop/muscles.zone_-696x348.png" alt="">
             </div>
         </div>
@@ -153,11 +153,11 @@
                 <div class="slidesTrainers">
                     {% for trainer in trainers %}
                          <a href="{% url 'page_trainer' id=trainer.id %}" style="text-decoration: none">
-                             <div class="card_trainer" data-category="{{ trainer.coach_type.name }}">
+                             <div class="card_trainer" data-category="{{ trainer.coachType.name }}">
                                 <img class="image_trainer" src="{{trainer.image.url}}" alt="Картинка услуги">
                                  <div class="text_trainer">
-                                    <h2 class="title_trainer">{{ trainer.first_name }} {{ trainer.last_name }} {{ trainer.patronymic }}</h2>
-                                    <p class="type_trainer">Специальность: {{ trainer.coach_type.name }}</p> 
+                                    <h2 class="title_trainer"> {{ trainer.lastName }} {{ trainer.firstName }} {{ trainer.patronymic }}</h2>
+                                    <p class="type_trainer">Специальность: {{ trainer.coachType.name }}</p> 
                                  </div>
                             </div>
                         </a>
@@ -191,11 +191,9 @@
                                         </ul>
                                     </div>
                                     <p class="price_subscription">{{ subscription.price }} ₽/мес</p>
-                                    <a class="buy_subscription" href="{% url 'buySubscriptions' id=subscription.id %}" >Выбрать</a>
+                                    <a class="buy_subscription" {% if user.isActive == True %}href="{% url 'buySubscriptions' id=subscription.id %}"{% endif %} href="{% url 'login'%}">Выбрать</a>
+                                </div>
                             </div>
-
-                            </div>
-                            
                        {% endfor %}
                     <div class="blockLinkMoreSubscriptions">
                        <div class="linkMoreSubscriptions">
@@ -218,17 +216,18 @@
                 </div>
                 <div style="display: flex; justify-content: center; align-items: center; flex: 50%">
                     <div style="position: relative; border-radius: 20px; background: white; height: 270px; width: 440px; box-shadow: 0 0 30px #00000063">
-                        <form style="display: flex; justify-content: center; align-items: center; height: 100% ">
+                        <form method="POST" style="display: flex; justify-content: center; align-items: center; height: 100% ">
+                            {% csrf_token %} 
                             <div>
                                <div style="display: flex; justify-content: center;width: 100%">
                                     <div style="width: 100%">
                                       <p style="text-align: left; margin-bottom: 5px">Номер телефона</p>
-                                        <input style="border-radius: 10px; height: 30px; padding: 7px; width: 96%; background: #eaeaea; border: none; font-size: 20px" placeholder="+7 (___) ___-__-__"/>
+                                        <input type="tel" name="phone" style="border-radius: 10px; height: 30px; padding: 7px; width: 96%; background: #eaeaea; border: none; font-size: 20px" placeholder="+7 (___) ___-__-__"/>
                                     </div>
     
                                 </div>
                                 <div>
-                                   <button style="background: #007bff; color: white; padding: 10px; border-radius: 10px; width: 100%; display: flex; justify-self: center; justify-content: center; margin-top: 15px; margin-bottom: 15px; border: none">Оставить заявку</button>
+                                   <button type="submit" style="background: #007bff; color: white; padding: 10px; border-radius: 10px; width: 100%; display: flex; justify-self: center; justify-content: center; margin-top: 15px; margin-bottom: 15px; border: none">Оставить заявку</button>
                                 </div>
                                 <p style="font-size: 12px; color: #6a6a6a">Нажимая кнопку, вы соглашаетесь с Политикой конфиденциальности</p> 
                             </div>

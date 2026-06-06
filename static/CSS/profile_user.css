@@ -2,10 +2,17 @@
     min-height: 100vh;
     justify-items: center;
 }
-
+.achiv_block{
+    padding: 10px;
+    height: 290px;
+    width: 300px;
+    background: white;
+    box-shadow: 1px 1px 5px black;
+    border-radius: 20px;
+}
 .data_block{
     width: 100%;
-    margin: 10px;
+    margin: 20px;
     display: flex;
 }
 .block_private_data{
@@ -16,12 +23,31 @@
     box-shadow: 1px 1px 5px black;
     border-radius: 20px;
 }
+.user_img {
+      display: block;
+      margin: 0 auto 10px auto;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: border 0.3s;
+    }
+    .user_img:hover {
+      border: 2px solid #4CAF50;
+    }
+    .change_photo_hint {
+      text-align: center;
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 15px;
+    }
 .block_info_user{
     display: flex;
 }
 .private_data{
-
-    padding: 10px;
+    width: 80%;
+    padding: 0 10px;
 }
 .block_info_user img{
     border-radius: 20px;
@@ -93,6 +119,7 @@
 
 }
 .cardHistory{
+    display: flex;
     border: 1px black solid;
     padding: 10px;
     border-radius: 20px;

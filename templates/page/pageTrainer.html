@@ -6,32 +6,66 @@
             <div class="block_all_trainer">
                 <a href="{% url "trainers" %}" class="link_return"><p >◀</p> Все тренеры</a>
             </div>
-            <div class="block_info_trainer">
+            <div class="block_info_trainer" style="height: 550px">
                 <div class="block_img_trainer">
-                    <img class="img_trainer" src="{{trainer.image.url}}" alt="">
+                    <img class="img_trainer" style="height: 500px" src="{{trainerPage.image.url}}" alt="">
                 </div>
                 <div class="block_text_trainer">
-                    <div style="height: 70%">
-                        <h3 style="margin-top: 0; color: #686868">{{ trainer.type_coach_id.type_coach_name}}</h3>
-                        <h1 style="color: black">{{ trainer.last_name}} {{ trainer.first_name}}</h1>
-                        <h2 >Образование:</h2>
-                        <ul style="list-style-type: square; " >
+                    <div style="min-height: 50%">
+                        <h3 style="margin-top: 0; color: #686868">{{ trainerPage.coachType.name}}</h3>
+                        <h1 style="color: black; text-align: left; font-size: 40px; margin-bottom: 20px">{{ trainerPage.lastName}} {{ trainerPage.firstName}}</h1>
+                        <p style=" margin: 5px 0; font-size: 20px; text-align: left">Образование:</p>
+                        <ul style="list-style-type: square; margin-left: 15px " >
                             {% for education in education %}
-                                <li>{{ education.name }}</li>
+                                <li><p style=" margin: 5px 0; font-size: 18px; text-align: left">{{ education.name }}</p></li>
                             {% endfor %}
                         </ul>
-                        <h2 >Работа направлена на:</h2>
-                        <ul style="list-style-type: square; ">
+                        <p style=" margin: 5px 0; font-size: 20px; text-align: left">Работа направлена на:</p>
+                        <ul style="list-style-type: square; margin-left: 15px">
                             {% for direction in direction %}
-                                <li>{{ direction.name }}</li>
+                                <li><p style=" margin: 5px 0; font-size: 18px; text-align: left">{{ direction.name }}</p></li>
                             {% endfor %}
                         </ul>
-                        <h2 style=" margin-bottom: 5px">Стаж работы:</h2>
-                        <p >{{ trainer.experience}}</p>
+                        <p style=" margin: 5px 0; font-size: 20px; text-align: left">Стаж работы:</p>
+                        <p style="text-align: left">{{ trainerPage.experience}}</p>
                     </div>
-                    <a class="button_timesheet" href="">Расписание тренера</a>
-                </div>
+                <form style="padding-top: 20px" method="POST">
+                    {% csrf_token %}
+                    <p>Дата и время:</p>
+                    <div style="display: flex; justify-content: center; width: 100%; padding: 10px">
+                         <input style="width: 300px; border: none; border-bottom: 2px solid black; font-size: 20px" type="datetime-local" id="dateTime" name="dateTime"
+                    required>
+                    </div>
+                    <div>
+                        <button class="button_timesheet" type="submit">Записаться на занятие</button>
+                    </div>
+                </form>
             </div>
+
         </div>
+            {% if review %}
+                <div class="scroll_review">
+                {% for review in review %}
+                    <div class="block_review_landmark" id="reviews">
+                        <img src="{{ review.user.image.url}}" alt="Фото пользователя" />
+                        <h6>{{ review.user.lastName}} {{review.user.firstName }} {{review.user.patronymic}}</h6>
+                        <p>{{ review.dateCreated }}<p>
+                        <div class="review_text">
+                            <p>{{ review.text }}</p>
+                        </div>
+
+                    </div>
+                {% endfor %}
+                </div>
+            {% endif %}
+            <div class="leave-review">
+              {% if user.is_active == True %}
+                <form class="review-form" method="post">
+                  {% csrf_token %}
+                  <textarea name="review_text" rows="4" placeholder="Ваш отзыв" style="width: auto" required></textarea>
+                  <button type="submit">Отправить</button>
+                </form>
+              {% endif %}
+            </div>
     </main>
 {% endblock %}

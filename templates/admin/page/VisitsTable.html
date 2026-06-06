@@ -2,8 +2,8 @@
     {% block page %}
         {% load static %}
     <main style="min-height: 100vh; background: white; padding: 0 20px">
+    <h1 style="text-align: left; font-size: 30px">Посещения</h1>
     <div class="content">
-    
         <!-- Таблица Пользователей -->
         <div id="section-users" class="section" >
              <div style="width: 100%; display: flex">
@@ -11,7 +11,7 @@
                         <input id="search-members" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
                     </div>
                    <div class="block_add">
-                        <a href="" class="addDate">Добавить</a>
+                        <a href="{%url 'add_visit' %}" class="addDate">Добавить</a>
                    </div> 
              </div> 
             <div style="height: 800px;overflow-y: scroll;">
@@ -21,7 +21,6 @@
                             <th>Изображение</th>
                             <th>ФИО</th>
                             <th>Телефон</th>
-                            <th>Персональная карта</th>
                             <th>Дата</th>
                             <th>Действия</th>
                         </tr>
@@ -30,13 +29,12 @@
                     {% for visit in visits %}
                         <tr class="rowData">
                             <td class="tdData"><img src="{{ visit.member.image.url }}"></td>
-                            <td class="tdData">{{ visit.member.last_name }} {{ visit.member.first_name }} {{ visit.member.patronymic }}</td>
-                            <td class="tdData">{{ visit.phone.personal_card.code }}</td>
-                            <td class="tdData">{{ visit.member.personal_card.code }}</td>
+                            <td class="tdData">{{ visit.member.lastName }} {{ visit.member.firstName }} {{ visit.member.patronymic }}</td>
+                            <td class="tdData">{{ visit.member.phone }}</td>
                             <td class="tdData">{{ visit.visitDate }}</td>
                             <td class="tdData">
-                                <a class="action-btn edit" href="" >Редактировать</a>
-                                <a class="action-btn delete" href="" >Удалить</a>
+                                <a class="action-btn edit" href="{% url 'edit_visit' id=visit.id %}" >Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'deleteVisit' id=visit.id %}" >Удалить</a>
                             </td>
                         </tr>
                     {% endfor %}

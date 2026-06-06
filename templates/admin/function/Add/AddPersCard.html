@@ -26,36 +26,12 @@
                 {% csrf_token %}
                 <h2 style="margin-bottom: 20px">Добавить визит</h2> 
                 <div class="form-group">
-                    {{ form.user.label_tag }}
-                    {{ form.user }}
+                    {{ form.code.label_tag }}
+                    {{ form.code }}
                 </div>
                 <div class="form-group">
-                    {{ form.image.label_tag }}
-                    {{ form.image }}
-                </div>
-                <div class="form-group">
-                    {{ form.last_name.label_tag }}
-                    {{ form.last_name }}
-                </div>
-                 <div class="form-group">
-                    {{ form.first_name.label_tag }}
-                    {{ form.first_name }}
-                </div>
-                 <div class="form-group">
-                    {{ form.patronymic.label_tag }}
-                    {{ form.patronymic }}
-                </div>
-                <div class="form-group">
-                    {{ form.passport_data.label_tag }}
-                    {{ form.passport_data }}
-                </div>
-                <div class="form-group">
-                    {{ form.phone.label_tag }}
-                    {{ form.phone }}
-                </div>
-                <div class="form-group">
-                    {{ form.date_of_birth.label_tag }}
-                    {{ form.date_of_birth }}
+                    {{ form.member.label_tag }}
+                    {{ form.member }}
                 </div>
                 <button class="button_exit" type="submit">Добавить</button>
             </form>

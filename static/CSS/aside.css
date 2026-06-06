@@ -49,6 +49,7 @@ aside:hover div{
     width: 100%;
 }
 aside a p{
+    font-size: 15px;
     display: none;
 }
 aside:hover a p{
@@ -57,6 +58,7 @@ aside:hover a p{
 }
 .logoutUserLink{
 height: 50px;}
+
 aside:hover .logoutUserLink{
     padding: 0;
     align-items: center;
@@ -72,7 +74,7 @@ aside a{
     text-decoration: none;
 }
 aside:hover{
-    width: 220px;
+    width: 240px;
 }
 .tabsAside{
     height: 75%;

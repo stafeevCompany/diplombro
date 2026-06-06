@@ -7,12 +7,12 @@
 .statisticsBar{
     padding: 10px;
     align-self: start;
-    background: white;
-    box-shadow: 0 0 2px black;
+    background: #F3F6F9;
     border-radius: 20px;
-    width: 440px;
-    height: 150px;
-    margin: 15px;
+    width: 300px;
+    height: 120px;
+    margin-right: 15px;
+    margin-bottom: 20px;
 }
 .statisticsText{
     display: flex;
@@ -54,14 +54,17 @@
 }
 
 .graphBlock{
-    display: flex;
+    width: 100%;
 }
 .graph{
+
     background: white;
-     border-radius: 20px; padding: 20px; box-shadow: 0 0 5px black; margin-right: 10px
+     border-radius: 20px; padding: 20px;
+    margin-bottom: 20px;
 }
 .topMembers{
-    height: 320px; width: 300px; border-radius: 20px; padding: 10px; box-shadow: 0 0 5px black;
+    height: 320px; width: 340px; border-radius: 20px; padding: 10px;
+    background: #F3F6F9;
 }
 .topMemberTitle{
     width: 100%;
@@ -84,7 +87,7 @@
     display: flex;
     justify-self: right;
     color: white;
-    background: #6a6a6a;
+    background: #7099F9;
     border-radius: 5px;
     padding: 5px;
 }

@@ -1,0 +1,22 @@
+{%extends "catallogs/catalogs.html" %}
+{% block catalog %}
+    {% load static %}
+    <main style="min-height: 100vh">
+    <div class="block_news">
+        {% for achivments in achivments %}
+            <a href="{% url 'achivmentsPage' id=achivments.id %}" style="text-decoration: none" >
+                <div class="card_news" style="height: 200px; width: 200px">
+                    <img src="{{achivments.icon.url}}" alt="Картинка новсти">
+                    <div class="blockTextNews">
+                        <h2>{{achivments.name}}</h2>
+                        <p>{{ achivments.date_earned}}</p>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="pagination" id="pagination" style="justify-self: center">
+        <!-- Ссылки генерируются JavaScript -->
+    </div>
+    </main>
+{% endblock %}

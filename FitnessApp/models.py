@@ -1,6 +1,14 @@
+import random
+import string
+
 from django.utils import timezone
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+import qrcode
+from io import BytesIO
+from django.core.files.base import ContentFile
+
 
 class Role(models.Model):
     name = models.CharField(max_length=50, default="Пользователь", unique=True)
@@ -13,10 +21,30 @@ class User(models.Model):
     role = models.ForeignKey(Role,  on_delete=models.CASCADE, null=True, related_name='users')
     phone = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=128)
-    is_active = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(default=timezone.now)
+    isActive = models.BooleanField(default=False)
+    dateJoined = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.phone
 
 
+
+class Achievement(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    icon = models.ImageField(upload_to='achievement_icons/', blank=True, null=True)
+    points = models.IntegerField(default=10)  # Баллы за достижение
+
+    def __str__(self):
+        return self.name
+
+class UserAchievement(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
+    dateEarned = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'achievement')  # Пользователь не может получить одно достижение дважды
 
 class SubscriptionCategory(models.Model):
     name = models.CharField(max_length=20, unique=True)
@@ -28,7 +56,7 @@ class SubscriptionCategory(models.Model):
 class Subscription(models.Model):
     category = models.ForeignKey(SubscriptionCategory,  on_delete=models.CASCADE, null=True, related_name='category_subscriptions')
     title = models.CharField(max_length=50)
-    duration_days = models.PositiveIntegerField()
+    durationDays = models.PositiveIntegerField()
     price = models.IntegerField()
 
     def __str__(self):
@@ -66,45 +94,78 @@ class SubscriptionFeature(models.Model):
 
 class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='member')
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    firstName = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=50)
     patronymic = models.CharField(max_length=50)
-    date_of_birth = models.DateField()
+    dateOfBirth = models.DateField()
     phone = models.CharField(max_length=50, unique=True)
-    passport_data = models.CharField(max_length=11)
-    image = models.ImageField(upload_to='media/images/members/')
-    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    email = models.EmailField(unique=True)
+    passportData = models.CharField(max_length=11)
+    image = models.ImageField(upload_to='media/images/members/', default="media/images/members/free-icon-user-9684504.png")
 
+    def __str__(self):
+        return f" {self.lastName} {self.firstName} {self.patronymic}"
+
+def generate_qr_code(data):
+    qr = qrcode.QRCode(
+        version=1,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(data)
+    qr.make(fit=True)
+    img = qr.make_image(fill='black', back_color='white')
+
+    # Сохраняем изображение в BytesIO
+    buffer = BytesIO()
+    img.save(buffer, format='PNG')
+    filename = 'qr_code.png'
+    # Возвращаем файл
+    return ContentFile(buffer.getvalue(), name=filename)
+
+def generate_unique_code(length=8):
+    characters = string.ascii_uppercase + string.digits
+    return ''.join(random.choices(characters, k=length))
 
 class PersonalCard(models.Model):
-    code = models.CharField(max_length=50, unique=True)
-    qr_code = models.ImageField(upload_to='media/images/qr_codes/')
-    member = models.ForeignKey(Member,  on_delete=models.CASCADE, null=True, related_name='cards')
-    def __str__(self):
-        return self.code
+    code = models.CharField(max_length=50, unique=True, blank=True)
+    qrCode = models.ImageField(upload_to='media/images/qr_codes/')
+    member = models.ForeignKey(Member, on_delete=models.CASCADE, null=True, related_name='cards')
+
+    def save(self, *args, **kwargs):
+        # Генерация уникального кода, если он не установлен
+        if not self.code:
+            while True:
+                new_code = generate_unique_code()
+                if not PersonalCard.objects.filter(code=new_code).exists():
+                    self.code = new_code
+                    break
+
+        # Генерация QR-кода, если его нет
+        if not self.qrCode:
+            qr_data = (
+                f'{self.member.lastName} {self.member.firstName} {self.member.patronymic}\n'
+                f'{self.member.phone}\n'
+                f'{self.member.dateOfBirth}\n'
+            )
+            qr_image = generate_qr_code(qr_data)  # Ваша функция генерации QR-кода
+            self.qrCode.save('qr_code.png', qr_image, save=False)
+
+        super().save(*args, **kwargs)
+
+
 
 class Visit(models.Model):
     member = models.ForeignKey(Member,  on_delete=models.CASCADE, null=True, related_name='visits')
     visitDate = models.DateTimeField(default=timezone.now)
 
-class BuySubscription(models.Model):
-    subscription = models.ForeignKey(Subscription,  on_delete=models.CASCADE, null=True, related_name='purchases')
-    start_date = models.DateField(default=timezone.now)
-    end_date = models.DateField()
-    personal_card = models.ForeignKey(PersonalCard, on_delete=models.CASCADE, null=True, related_name='personal_card_subscriptions')
-    is_active = models.BooleanField(default=True)
-
-
-    def __str__(self):
-        return f'{self.subscription} from {self.start_date} to {self.end_date}'
-
 
 class Notification(models.Model):
     user = models.ForeignKey(User,  on_delete=models.CASCADE, null=True, related_name='notifications')
-    created_at = models.DateTimeField(auto_now_add=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100)
     text = models.TextField()
-    is_read = models.BooleanField(default=False)
+    isRead = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -130,17 +191,30 @@ class CoachType(models.Model):
 
 
 class Coach(models.Model):
-    user = models.ForeignKey(User,  on_delete=models.CASCADE, related_name='coach')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='coach')
     image = models.ImageField(upload_to='media/images/coach/')
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    firstName = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=50)
     patronymic = models.CharField(max_length=50)
-    passport_data = models.CharField(max_length=11)
+    passportData = models.CharField(max_length=11)
     phone = models.CharField(max_length=50, unique=True)
     experience = models.TextField()
-    date_of_birth = models.DateField()
-    coach_type = models.ForeignKey(CoachType, on_delete=models.SET_NULL, null=True, related_name='type')
+    dateOfBirth = models.DateField()
+    email = models.CharField()
+    coachType = models.ForeignKey(CoachType, on_delete=models.SET_NULL, null=True, related_name='type')
     price = models.IntegerField()
+
+    def __str__(self):
+        return f" {self.lastName} {self.firstName} {self.patronymic}"
+
+# Отзывы посетителей
+class Review(models.Model):
+    user = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='reviews')
+    trainer = models.ForeignKey(Coach, on_delete=models.CASCADE)
+    text = models.TextField()
+    dateCreated = models.DateTimeField(auto_now_add=True)
+
+
 
 class Education(models.Model):
     name = models.CharField(max_length=100)
@@ -161,12 +235,13 @@ class Direction(models.Model):
 class Administrator(models.Model):
     user = models.ForeignKey(User,  on_delete=models.CASCADE, related_name='administrator')
     image = models.ImageField(upload_to='media/images/coach/')
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    firstName = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=50)
     patronymic = models.CharField(max_length=50)
     passport_data = models.CharField(max_length=11)
     phone = models.CharField(max_length=50, unique=True)
-    date_of_birth = models.DateField()
+    email = models.CharField()
+    dateOfBirth = models.DateField()
 
 class Room(models.Model):
     title = models.CharField(max_length=50)
@@ -192,7 +267,7 @@ class ShopItem(models.Model):
     img = models.ImageField(upload_to='media/images/shop/')
     title = models.CharField(max_length=100)
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.IntegerField()
     quantity = models.IntegerField()
     category = models.ForeignKey(ShopCategory, on_delete=models.CASCADE, null=True, related_name='category_shop')
 
@@ -200,7 +275,7 @@ class Basket(models.Model):
     item = models.ForeignKey(ShopItem, on_delete=models.CASCADE, null=True, related_name='baskets')
     member = models.ForeignKey(Member, on_delete=models.CASCADE, null=True, related_name='memberBaskets')
     quantity = models.IntegerField(default=1)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.IntegerField()
 
 
 class GetPreviewTags(models.Model):
@@ -215,7 +290,7 @@ class TimetableCoach(models.Model):
     member = models.ForeignKey(Member,  on_delete=models.CASCADE, null=True, related_name='member_timetables')
     typeTraining = models.CharField(max_length=50)
     dateTime = models.DateTimeField()
-    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    amount = models.IntegerField( default=0)
     status = models.CharField(max_length=50)
 
 #Платежка
@@ -228,21 +303,19 @@ class TimetableCoachPayment(models.Model):
         REFUNDED = 'refunded', _('Возвращен')
         # ... другие статусы по необходимости
 
-    timetable_coach = models.ForeignKey(
+    timetableСoach = models.ForeignKey(
         TimetableCoach,
         on_delete=models.CASCADE,
         related_name='timetablecoach_payments',
         verbose_name=_('Расписание тренера')
     )
-    payment_id: models.CharField = models.CharField(
+    paymentId: models.CharField = models.CharField(
         max_length=255,
         unique=True,
         db_index=True,
         verbose_name=_('ID платежа в системе шлюза')
     )
-    amount: models.DecimalField = models.DecimalField(
-        max_digits=10,
-        decimal_places=0,
+    amount: models.IntegerField = models.IntegerField(
         verbose_name=_('Сумма платежа')
     )
     currency: models.CharField = models.CharField(
@@ -255,11 +328,11 @@ class TimetableCoachPayment(models.Model):
         default=Status.PENDING,
         verbose_name=_('Статус платежа')
     )
-    created_at: models.DateTimeField = models.DateTimeField(
+    createdAt: models.DateTimeField = models.DateTimeField(
         auto_now_add=True,
         verbose_name=_('Дата создания')
     )
-    updated_at: models.DateTimeField = models.DateTimeField(
+    updatedAt: models.DateTimeField = models.DateTimeField(
         auto_now=True,
         verbose_name=_('Дата обновления')
     )
@@ -267,7 +340,7 @@ class TimetableCoachPayment(models.Model):
     class Meta:
         verbose_name = _('Тренер')
         verbose_name_plural = _('Тренера')
-        ordering = ('-created_at',)
+        ordering = ('-createdAt',)
 
 
 
@@ -285,7 +358,7 @@ class SubscriptionPayment(models.Model):
             related_name='payments',
             verbose_name=_('Заказ')
         )
-    payment_id: models.CharField = models.CharField(
+    paymentID: models.CharField = models.CharField(
             max_length=255,
             unique=True,
             db_index=True,
@@ -306,18 +379,23 @@ class SubscriptionPayment(models.Model):
             default=Status.PENDING,
             verbose_name=_('Статус платежа')
         )
-    created_at: models.DateTimeField = models.DateTimeField(
+    createdAt: models.DateTimeField = models.DateTimeField(
             auto_now_add=True,
             verbose_name=_('Дата создания')
         )
-    updated_at: models.DateTimeField = models.DateTimeField(
+    updatedAat: models.DateTimeField = models.DateTimeField(
             auto_now=True,
             verbose_name=_('Дата обновления')
         ),
     class Meta:
             verbose_name = _('Платеж')
             verbose_name_plural = _('Платежи')
-            ordering = ('-created_at',)
+            ordering = ('-createdAt',)
+
+class BuyItem(models.Model):
+    item = models.ForeignKey(ShopItem, on_delete=models.CASCADE, null=True, related_name='buyItems')
+    member = models.ForeignKey(Member, on_delete=models.CASCADE, null=True, related_name='memberBuyItems')
+    date = models.DateTimeField(default=timezone.now)
 
 class ShopPayment(models.Model):
     class Status(models.TextChoices):
@@ -333,15 +411,14 @@ class ShopPayment(models.Model):
             related_name='payments',
             verbose_name=_('Заказ')
         )
-    payment_id: models.CharField = models.CharField(
+    paymentID: models.CharField = models.CharField(
             max_length=255,
             unique=True,
             db_index=True,
             verbose_name=_('ID платежа в системе шлюза')
         )
-    amount: models.DecimalField = models.DecimalField(
-            max_digits=10,
-            decimal_places=0,
+    amount: models.DecimalField = models.IntegerField(
+
             verbose_name=_('Сумма платежа')
         )
     currency: models.CharField = models.CharField(
@@ -358,15 +435,22 @@ class ShopPayment(models.Model):
             default=Status.PENDING,
             verbose_name=_('Статус платежа')
         )
-    created_at: models.DateTimeField = models.DateTimeField(
+    createdAt: models.DateTimeField = models.DateTimeField(
             auto_now_add=True,
             verbose_name=_('Дата создания')
         )
-    updated_at: models.DateTimeField = models.DateTimeField(
+    updatedAat: models.DateTimeField = models.DateTimeField(
             auto_now=True,
             verbose_name=_('Дата обновления')
         ),
     class Meta:
             verbose_name = _('Платеж')
             verbose_name_plural = _('Платежи')
-            ordering = ('-created_at',)
+            ordering = ('-createdAt',)
+
+class BuySubscription(models.Model):
+    buySubscription = models.ForeignKey(SubscriptionPayment,  on_delete=models.CASCADE, null=True, related_name='purchases')
+    startDate = models.DateField(default=timezone.now)
+    endDate = models.DateField()
+    personalCard = models.ForeignKey(PersonalCard, on_delete=models.CASCADE, null=True, related_name='personal_card_subscriptions')
+    isActive = models.BooleanField(default=True)

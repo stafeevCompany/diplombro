@@ -5,11 +5,11 @@
             <div class="block_trainers" id="tabs">
                 {% for trainer in trainers %}
                     <a href="{% url 'page_trainer' id=trainer.id %}" style="text-decoration: none">
-                         <div class="card_trainer" data-category="{{ trainer.coach_type.name }}">
+                         <div class="card_trainer" data-category="{{ trainer.coachType.name }}">
                             <img class="image_trainer" src="{{trainer.image.url}}" alt="Картинка услуги">
                              <div class="text_trainer">
-                                <h2 class="title_trainer">{{ trainer.first_name }} {{ trainer.last_name }} {{ trainer.patronymic }}</h2>
-                                <p class="type_trainer">Специальность: {{ trainer.coach_type.name }}</p> 
+                                <h2 class="title_trainer">{{ trainer.lastName }} {{ trainer.firstName }} {{ trainer.patronymic }}</h2>
+                                <p class="type_trainer">Специальность: {{ trainer.coachType.name }}</p> 
                              </div>
                         </div>
                     </a>

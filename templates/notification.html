@@ -3,25 +3,22 @@
     {% load static %}
     <main class="main_notification" >
         <div class="block_title_notification">
-            <h1>Уведомления</h1>
+            <h1 style="text-align: left">Уведомления</h1>
         </div>
         <div class="block_notifications">
             {% for notification in notifications %}
             <div class="notification" >
                 <div style="display: flex">
-                    <div class="notification_img">
-                        <img style="width: 100px; height: 100px" src="{{ notification.image.url }}" alt="фото(не обязательно)"/>
-                    </div>
                     <div class="block_notification_all">
                          
                         <div class="notification_title">
-                            <h4>{{ notification.title }}</h4>
+                            <h4 style="font-size: 20px">{{ notification.title }}</h4>
                         </div>
                         <div class="notification_text">
-                            <p>{{ notification.text }}</p>
+                            <p style="text-align: left; font-size: 15px">{{ notification.text }}</p>
                         </div>
                         <div class="notification_time">
-                            <p>{{ notification.created_at }}</p>
+                            <p>{{ notification.createdAt }}</p>
                         </div>
                     </div>
                     

@@ -27,7 +27,7 @@
                                         <img style="border-radius: 50%;  height: 100%; width: 100%" src="{{ lesson.trainer.image.url }}">
                                     </div>
                                <div style="margin-left: 10px">
-                                    <h2 style="text-align: left;">{{ lesson.trainer.last_name }} {{ lesson.trainer.first_name }} {{ lesson.trainer.patronymic }}</h2>
+                                    <h2 style="text-align: left;">{{ lesson.trainer.lastName }} {{ lesson.trainer.firstName }} {{ lesson.trainer.patronymic }}</h2>
                                     <p style="text-align: left;">Номер телефона: {{ lesson.trainer.phone }}</p>
                                     <p style="text-align: left;">Тип тренировки: {{ lesson.typeTraining }}</p> 
                                </div>  
@@ -35,7 +35,7 @@
                             
                             
                             <div style="display: flex; justify-content: right">
-                                <a class="action-btn delete" href="" >Удалить</a>
+                                <a class="action-btn delete"  href="{% url "delete_timetable_user" id=lesson.id %}" >Удалить</a>
                             </div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                                         <img style="border-radius: 50%;  height: 100%; width: 100%" src="{{ lesson.trainer.image.url }}">
                                     </div>
                                <div style="margin-left: 10px">
-                                    <h2 style="text-align: left;">{{ lesson.trainer.last_name }} {{ lesson.trainer.first_name }} {{ lesson.trainer.patronymic }}</h2>
+                                    <h2 style="text-align: left;">{{ lesson.trainer.lastName }} {{ lesson.trainer.firstName }} {{ lesson.trainer.patronymic }}</h2>
                                     <p style="text-align: left;">Номер телефона: {{ lesson.trainer.phone }}</p>
                                     <p style="text-align: left;">Тип тренировки: {{ lesson.typeTraining }}</p> 
                                </div>  
@@ -67,8 +67,8 @@
                             
                             
                             <div style="display: flex; justify-content: right">
-                                <a class="action-btn edit" href="" >Редактировать</a>
-                                <a class="action-btn delete" href="" >Удалить</a>
+                                
+                                <a class="action-btn delete"  href="{% url "delete_timetable_user" id=lesson.id %}" >Удалить</a>
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                                         <img style="border-radius: 50%; height: 100%; width: 100%" src="{{ lesson.trainer.image.url }}">
                                     </div>
                                <div style="margin-left: 10px">
-                                    <h2 style="text-align: left;">{{ lesson.trainer.last_name }} {{ lesson.trainer.first_name }} {{ lesson.trainer.patronymic }}</h2>
+                                    <h2 style="text-align: left;">{{ lesson.trainer.lastName }} {{ lesson.trainer.firstName }} {{ lesson.trainer.patronymic }}</h2>
                                     <p style="text-align: left;">Номер телефона: {{ lesson.trainer.phone }}</p>
                                     <p style="text-align: left;">Тип тренировки: {{ lesson.typeTraining }}</p> 
                                </div>  
@@ -99,7 +99,7 @@
                             
                             
                             <div style="display: flex; justify-content: right">
-                                <a class="action-btn delete" href="" >Удалить</a>
+                                <a class="action-btn delete" href="{% url "delete_timetable_user" id=lesson.id %}" >Удалить</a>
                             </div>
                         </div>
                     </div>

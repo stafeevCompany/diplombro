@@ -4,40 +4,32 @@
     <main style="min-height: 100vh; background: white; padding: 0 20px">
     
     <nav>
-        <button onclick="showSection('preview')">Превью</button>
-        <button onclick="showSection('tags')">Тэги</button>
         <button onclick="showSection('rooms')">Пространство</button>
+        <button onclick="showSection('consls')">Заявки</button>
     </nav>
     <hr>
     <div class="content">
-        <div id="section-preview" class="section" >
+        <div id="section-consls" class="section" >
              <div style="width: 100%; display: flex">
                     <div style="width: 100%; ">
-                        <input id="search-members" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
+                        <input id="search-consls" style="margin-bottom: 10px; margin-top: 10px; width: 99%" type="text" placeholder="Поиск">
                     </div>
-                   <div class="block_add">
-                        <a href="" class="addDate">Добавить</a>
-                   </div> 
+
              </div> 
             <div style="height: 800px;overflow-y: scroll;">
                 <table>
                     <thead class="headerTable">
                         <tr class="rowData">
-                            <th>Изображение</th>
-                            <th>Заголовок</th>
-                            <th>Описание</th>
+                            <th>Заявка</th>
                             <th>Действия</th>
                         </tr>
                     </thead>
-                    <tbody id="tbody-members">
-                    {% for preview in preview %}
+                    <tbody id="tbody-consls">
+                    {% for conl in conl %}
                         <tr class="rowData">
-                            <td class="tdData"><img src="{{ preview.image.url }}"></td>
-                            <td class="tdData">{{ preview.title }}</td>
-                            <td class="tdData">{{ preview.description }}</td>
+                            <td class="tdData">{{ conl.numberPhone }}</td>
                             <td class="tdData">
-                                <a class="action-btn edit" href="" >Редактировать</a>
-                                <a class="action-btn delete" href="" >Удалить</a>
+                                <a class="action-btn delete" href="{% url 'consl_delete' id=conl.id %}" >Удалить</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -45,47 +37,14 @@
                 </table>
             </div>
         </div>
-        <!-- Таблица Категорий -->
-        <div id="section-tags" class="section" style="display:none;">
-            <div style="width: 100%; display: flex">
-                    <div style="width: 100%; ">
-                        <input id="search-trainers" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
-                    </div>
-                   <div class="block_add">
-                        <a href="" class="addDate">Добавить</a>
-                   </div> 
-            </div>
-            <div style="height: 800px;overflow-y: scroll;">
-                <table>
-                    <thead class="headerTable">
-                        <tr>
-                            <th>Изображение</th>
-                            <th>Описание</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody-trainers">
-                    {% for getPreviewTag in getPreviewTags %}
-                        <tr class="rowData">
-                            <td class="tdData"><img src="{{ getPreviewTag.image.url }}" ></td>
-                            <td class="tdData">{{ getPreviewTag.description }}</td>
-                            <td class="tdData">
-                                <a class="action-btn edit" href="">Редактировать</a>
-                                <a class="action-btn delete" href="" >Удалить</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+
         <div id="section-rooms" class="section" style="display:none;">
             <div style="width: 100%; display: flex">
                     <div style="width: 100%; ">
                         <input id="search-subscriptions" style="margin-bottom: 10px; margin-top: 10px" type="text" placeholder="Поиск"> 
                     </div>
                    <div class="block_add">
-                        <a href="" class="addDate">Добавить</a>
+                        <a href="{% url 'add_room' %}" class="addDate">Добавить</a>
                    </div> 
             </div>
             <div style="height: 800px;overflow-y: scroll;">
@@ -105,8 +64,8 @@
                             <td class="tdData">{{ room.title }}</td>
                             <td class="tdData">{{ room.description }}</td>
                             <td class="tdData">
-                                <a class="action-btn edit" href="" >Редактировать</a>
-                                <a class="action-btn delete" href="" >Удалить</a>
+                                <a class="action-btn edit" href="{% url 'edit_room' id=room.id %}" >Редактировать</a>
+                                <a class="action-btn delete" href="{% url 'delete_room' id=room.id %}" >Удалить</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -125,7 +84,7 @@
       }
       
       document.addEventListener('DOMContentLoaded', () => {
-        showSection('preview');
+        showSection('rooms');
       });
       
       
@@ -151,7 +110,7 @@
   }
 
   // Настройка поиска для каждой секции
-  setupSearch('search-members', 'tbody-members');
+  setupSearch('search-consls', 'tbody-consls');
   setupSearch('search-trainers', 'tbody-trainers');
   setupSearch('search-subscriptions', 'tbody-subscriptions');
   

@@ -20,7 +20,7 @@
     position: relative;
     border-radius: 20px;
     width: 350px;
-    height: 460px;
+    height: 360px;
     border: #007bff 2px solid;
 }
 ul{
@@ -41,8 +41,6 @@ ul{
 }
 .title_subscription{
     color: black;
-    text-align: justify;
-    word-break: break-all;
     text-decoration: none;
     margin-left: 20px;
     margin-bottom: 5px;

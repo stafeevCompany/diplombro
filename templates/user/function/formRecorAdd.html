@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{%extends "base/base.html" %}
+{% block page %}
+    <main style="height: 100vh; display: flex; justify-content: center; align-items: center" >
+    <div class="login_form_block" >
+        <form action="/submit_training/" method="post" class="login_form">
+          {% csrf_token %}
+          
+          <p style="text-align: left">Тренер</p>
+          
+          <br><br>
+          
+          <label for="dateTime">Дата и время:</label>
+            <input type="datetime-local" id="dateTime" name="dateTime" min="2024-01-01T08:00" 
+       max="2024-12-31T22:00"  required>
+          <br><br>
+        
+        
+          
+          <button type="submit">Записаться на тренировку</button>
+        </form>
+    </div>
+    </main>
+{% endblock %}

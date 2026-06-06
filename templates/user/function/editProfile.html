@@ -1,19 +1,45 @@
 {%extends "base/base.html" %}
 {% block page %}
     {% load static %}
+    
     <main style="min-height: 100vh;" >
         <div class="login_form_block" >
-            <form class="login_form" method="POST">
+            <form class="login_form" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <h1>Редактирование профиля</h1>
-                <input type="tel" placeholder="Имя" name="phone" required/>
-                <input type="password" name="password"  placeholder="Фамилия" required/>
-                <input type="password" name="password"  placeholder="Отчество" required/>
-                <input type="password" name="password"  placeholder="Номер телефона" required/>
-                <input type="password" name="password"  placeholder="Пароль" required/>
+                <h1 style="color: black">Редактирование профиля</h1>     
+                <div class="change_photo_hint">Кликните по изображению, чтобы изменить фото</div>
+                <img src="{{ member.image.url }}" alt="Профильное изображение" class="user_img" id="profileImage" title="Нажмите, чтобы изменить фото" style="cursor:pointer;">
+                <input type="file" id="imageUpload" name="image" accept="image/*" style="display:none" />
+                <input type="text" name="lastname"  placeholder="Фамилия" value="{{ member.lastName }}" required/>
+                <input type="text" placeholder="Имя" name="firstname" value="{{ member.firstName }}" required/>
+                <input type="text" name="patronymic"  placeholder="Отчество" value="{{ member.patronymic }}" required/>
+                <input type="email" name="email"  placeholder="Почта" value="{{ member.email }}" required/>
+                <input type="text" name="phone"  placeholder="+7 (___) ___-__-__"  value="{{ user.phone }}" required/>
+                <input type="text" name="password"  placeholder="Пароль" value="{{ user.password }}" required/>
                 <button class="button_exit" type="submit">Изменить</button>
                 <p></p>
             </form>
         </div>
     </main>
+    <script>
+    const profileImage = document.getElementById('profileImage');
+    const imageUpload = document.getElementById('imageUpload');
+
+    // Клик по изображению вызывает выбор файла
+    profileImage.addEventListener('click', () => {
+      imageUpload.click();
+    });
+
+    // После выбора файла отображается выбранное изображение
+    imageUpload.addEventListener('change', () => {
+      const file = imageUpload.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          profileImage.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    </script>
 {% endblock %}

@@ -1,23 +1,19 @@
 {%extends "base/base.html" %}
     {% block page %}
         {% load static %}
-    <main style="min-height: 100vh">
-    
-    <header>
-        <h1>Расписание</h1>
-    </header>
-    
+    <main style="min-height: 100vh; padding: 10px">
+
+        <h1 style="font-size: 30px; text-align: left; margin-bottom: 20px">Расписание</h1>
+
     <nav>
         <button onclick="showSection('today')">На день</button>
         <button onclick="showSection('tomorrow')">На завтра</button>
         <button onclick="showSection('week')">На неделю</button>
     </nav>
+    <hr>
     <div class="content">
         <div id="section-today" class="section" >
           <h2>На сегодня</h2>
-                <div class="block_add">
-                    <a href="" class="addDate">Добавить</a>
-                </div>
             {% for date, lessons in today_schedule.items %}
                 <div style="justify-content: right; display: flex"><h1>{{ date }}</h1></div>
                 {% for lesson in lessons %}
@@ -31,7 +27,7 @@
                                         <img style="border-radius: 50%;  height: 100%" src="{{ lesson.member.image.url }}">
                                     </div>
                                <div style="margin-left: 10px">
-                                    <h2 style="text-align: left;">{{ lesson.member.last_name }} {{ lesson.member.first_name }} {{ lesson.member.patronymic }}</h2>
+                                    <h2 style="text-align: left;">{{ lesson.member.firstName }} {{ lesson.member.lastName }}  {{ lesson.member.patronymic }}</h2>
                                     <p style="text-align: left;">Номер телефона: {{ lesson.member.phone }}</p>
                                     <p style="text-align: left;">Тип тренировки: {{ lesson.typeTraining }}</p> 
                                </div>  
@@ -39,8 +35,7 @@
                             
                             
                             <div style="display: flex; justify-content: right">
-                                <a class="action-btn edit" href="" >Редактировать</a>
-                                <a class="action-btn delete" href="" >Удалить</a>
+                                <a class="action-btn delete" href="{% url 'delete_timetable_admin' id=lesson.id %}" >Удалить</a>
                             </div>
                         </div>
                     </div>
@@ -50,9 +45,7 @@
         <!-- Таблица Категорий -->
         <div id="section-tomorrow" class="section" style="display:none;">
             <h2>На завтра</h2>
-            <div class="block_add">
-                <a href="" class="addDate">Добавить</a>
-            </div>
+        
             {% for date, lessons in tomorrow_schedule.items %}
                 <div style="justify-content: right; display: flex"><h1>{{ date }}</h1></div>
                 {% for lesson in lessons %}
@@ -66,7 +59,7 @@
                                         <img style="border-radius: 50%;  height: 100%" src="{{ lesson.member.image.url }}">
                                     </div>
                                <div style="margin-left: 10px">
-                                    <h2 style="text-align: left;">{{ lesson.member.last_name }} {{ lesson.member.first_name }} {{ lesson.member.patronymic }}</h2>
+                                    <h2 style="text-align: left;">{{ lesson.member.firstName }} {{ lesson.member.lastName }}  {{ lesson.member.patronymic }}</h2>
                                     <p style="text-align: left;">Номер телефона: {{ lesson.member.phone }}</p>
                                     <p style="text-align: left;">Тип тренировки: {{ lesson.typeTraining }}</p> 
                                </div>  
@@ -74,8 +67,7 @@
                             
                             
                             <div style="display: flex; justify-content: right">
-                                <a class="action-btn edit" href="" >Редактировать</a>
-                                <a class="action-btn delete" href="" >Удалить</a>
+                                <a class="action-btn delete" href="{% url 'delete_timetable_admin' id=lesson.id %}" >Удалить</a>
                             </div>
                         </div>
                     </div>
@@ -85,9 +77,6 @@
     
         <div id="section-week" class="section" style="display:none;">
             <h2>На неделю</h2>
-            <div class="block_add">
-                <a href="" class="addDate">Добавить</a>
-            </div>
             {% for date, lessons in week_schedule.items %}
                 <div style="justify-content: right; display: flex"><h1>{{ date }}</h1></div>
                 {% for lesson in lessons %}
@@ -101,7 +90,7 @@
                                         <img style="border-radius: 50%;  height: 100%" src="{{ lesson.member.image.url }}">
                                     </div>
                                <div style="margin-left: 10px">
-                                    <h2 style="text-align: left;">{{ lesson.member.last_name }} {{ lesson.member.first_name }} {{ lesson.member.patronymic }}</h2>
+                                    <h2 style="text-align: left;">{{ lesson.member.firstName }} {{ lesson.member.lastName }} {{ lesson.member.patronymic }}</h2>
                                     <p style="text-align: left;">Номер телефона: {{ lesson.member.phone }}</p>
                                     <p style="text-align: left;">Тип тренировки: {{ lesson.typeTraining }}</p> 
                                </div>  
@@ -109,8 +98,7 @@
                             
                             
                             <div style="display: flex; justify-content: right">
-                                <a class="action-btn edit" href="" >Редактировать</a>
-                                <a class="action-btn delete" href="" >Удалить</a>
+                                <a class="action-btn delete" href="{% url 'delete_timetable_admin' id=lesson.id %}" >Удалить</a>
                             </div>
                         </div>
                     </div>

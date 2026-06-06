@@ -5,7 +5,7 @@
         <div class="login_form_block" >
             <form class="login_form" method="POST">
                 {% csrf_token %}
-                <h1>Авторизация</h1>
+                <h1 style="color: black">Авторизация</h1>
                 <input type="tel" placeholder="Номер телефона" name="phone" required/>
                 <input type="password" name="password"  placeholder="Пароль" required/>
                 <button class="button_exit" type="submit">Войти</button>

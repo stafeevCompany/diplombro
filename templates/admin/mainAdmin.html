@@ -4,8 +4,9 @@
     window.onload = function () {
         var dps = {{ data_points|safe }};
         var dps1 = {{ data_points_total|safe }}
-        
+       
         var chart = new CanvasJS.Chart("chartContainer", {
+            backgroundColor: "#F3F6F9",
             title: {
                 fontSize: 20,
                 text: "Посещения клиентов за последние 7 дней"
@@ -28,16 +29,18 @@
         });
         
         var chart1 = new CanvasJS.Chart("paymentsChart", {
+            backgroundColor: "#F3F6F9",
             title: {
                 fontSize: 20,
                 text: "Платежи"
             },
             data: [{
-                lineThickness: 3,
+                lineThickness: 2,
                 type: "column",
                 dataPoints: dps1,
                 color: "lightblue",
                 lineColor: "#007bff",
+                columnWidth: 10
             }],
             axisX: {
             },
@@ -55,33 +58,9 @@
 </script>
     <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
     {% load static %}
-    <main class="profile_fon" style="background: white; padding: 0 20px">
-        <div class="graphBlock">
-            <div id="chartContainer" class="graph" style="height: 300px; width: 500px;">
-	        </div>
-            <div id="paymentsChart" class="graph" style="height: 300px; width: 500px;">
-	        </div>
-            <div class="topMembers">
-                <div class="topMemberTitle">
-                    <h1>Топ клиент</h1>
-                    <p style="margin-bottom: 5px"> {{ topVisitsOftenMember.member.last_name}} {{ topVisitsOftenMember.member.first_name}} {{ topVisitsOftenMember.member.patronymic}}</p>
-                </div>
-                <div style="overflow-x: auto">
-                    {% for visitsOftenMember in visitsOftenMember %}
-                        <hr>
-                        <div class="topMember">
-                        
-                            <img src="../../static/mainAdminPage/free-icon-user-1077114.png">
-                            <p class="nameMember">{{ visitsOftenMember.last_name}} {{ visitsOftenMember.first_name}} {{ visitsOftenMember.patronymic}}</p>
-                            <p class="visitsCount">{{ visitsOftenMember.visits_count}}</p>
-                        
-                        </div>
-                    {% endfor %}
-                </div>
-                
-            </div>
-        </div>
+    <main class="profile_fon" style="background: white; padding: 20px 20px">
         
+        <div class="graphBlock">
         <div class="statistics">
             <div class="statisticsBar">
                 <div class="statisticsTitle">
@@ -92,7 +71,7 @@
                         <h2>{{ countMembers }}</h2>
                     </div>
                     <div class="statisticsImg">
-                       <img src="../../static/mainAdminPage/free-icon-customer-3126647.png" alt="">
+                       <img src="../../static/mainAdminPage/free-icon-customer-5174200.png" alt="">
                     </div>
                 </div>
             </div>
@@ -112,7 +91,7 @@
             </div>
             <div class="statisticsBar">
                 <div class="statisticsTitle">
-                    <p>Выручка за сегодня</p>
+                    <p>Выручка за месяц</p>
                 </div>
                 <div class="statisticsBlock">
                     <div class="statisticsText">
@@ -123,6 +102,47 @@
                     </div>
                 </div>
             </div>
+             <div class="statisticsBar">
+                <div class="statisticsTitle">
+                    <p>Выручка за сегодня</p>
+                </div>
+                <div class="statisticsBlock">
+                    <div class="statisticsText">
+                        <h2>{{ money_today }} ₽</h2>
+                    </div>
+                    <div class="statisticsImg">
+                        <img src="../../static/mainAdminPage/free-icon-graph-4366075.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div style="display: flex">
+                <div id="chartContainer" class="graph" style="height: 300px; width: 70%; margin-right: 10px;background: #F3F6F9;">
+                </div>
+                <div class="topMembers">
+                    <div class="topMemberTitle">
+                        <h1>Топ клиент</h1>
+                        <p style="margin-bottom: 5px">{{ topVisitsOftenMember.member.lastName}} {{ topVisitsOftenMember.member.firstName}}  {{ topVisitsOftenMember.member.patronymic}}</p>
+                    </div>
+                    <div style="overflow-x: auto">
+                        {% for visitsOftenMember in visitsOftenMember %}
+                            <hr>
+                            <div class="topMember">
+                            
+                                <img src="../../static/mainAdminPage/free-icon-user-1077114.png">
+                                <p class="nameMember">{{ visitsOftenMember.lastName}} {{ visitsOftenMember.firstName}}  {{ visitsOftenMember.patronymic}}</p>
+                                <p class="visitsCount">{{ visitsOftenMember.visits_count}}</p>
+                            
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div id="paymentsChart" class="graph" style="height: 300px;  width: 97%; background: #F3F6F9;">
+	        </div>
+            
         </div>
     </main>
 {% endblock %}
