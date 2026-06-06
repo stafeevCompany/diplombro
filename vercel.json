@@ -2,26 +2,33 @@
   "version": 2,
   "builds": [
     {
-      "src": "manage.py",
+      "src": "Fitness_club/wsgi.py",
       "use": "@vercel/python",
       "config": {
-        "maxLambdaSize": "50mb"
+
+        "runtime": "python3.13"
+      }
+    },
+    {
+      "src": "build_files.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles"
       }
     }
   ],
   "routes": [
     {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/media/(.*)",
+      "dest": "/media/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/manage.py"
+      "dest": "Fitness_club/wsgi.py"
     }
-  ],
-  "env": {
-    "DJANGO_SECRET_KEY": "django-insecure-=5)5r3k%k)qt*%er_v2yrnhz@ldn)#$0-(ron*2oyxf1+-vcu!",
-    "STRIPE_SECRET_KEY": "sk_test_51TTYqjRvFMvmJas11BeOhIWKXteoYxK1cm1AVPLOmNihJOMJEX91hgfPg4PBxBEggWuAnTAs5CDCcis1l5M7lZSp00swahmICh",
-    "STRIPE_PUBLIC_KEY": "pk_test_51TTYqjRvFMvmJas1jS4uPTe2M0Jgqkqg8MGGmEEcxOUPcU6HEvyUmznbZ0JBPKLRznWL20Ijf07RNbmDdC5bSlvJ00557w6h4j",
-    "EMAIL_HOST_USER": "aleshka.stafeev@bk.ru",
-    "EMAIL_HOST_PASSWORD": "0TeUyUovaaebEMfAYSdP",
-    "DATABASE_URL": "sqlite:///db.sqlite3",
-    "DJANGO_SETTINGS_MODULE": "Fitness_club.settings"
-  }
+  ]
 }
